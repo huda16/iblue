@@ -1,4 +1,4 @@
-package sample;
+package iblue;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
