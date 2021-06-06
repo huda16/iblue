@@ -17,9 +17,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
+<AnchorPane style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
     <children>
-        <VBox layoutY="-2.0" prefHeight="891.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+        <VBox layoutY="-2.0" prefHeight="1065.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
@@ -35,42 +35,42 @@
                         </Text>
                     </children>
                 </Pane>
-                <Button graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
+                <Button fx:id="btnProfil" graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
+                <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
+                <Button fx:id="btnDaftarPeminjaman" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+                <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
+                <Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
+                <Button fx:id="btnDaftarArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
@@ -87,7 +87,7 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
             </padding>
         </HBox>
-        <TableView fx:id="tBuku" layoutX="319.0" layoutY="308.0" prefHeight="748.0" prefWidth="1569.0">
+        <TableView fx:id="tBuku" layoutX="319.0" layoutY="308.0" prefHeight="736.0" prefWidth="1555.0">
             <columns>
                 <TableColumn fx:id="colKode" prefWidth="100.0" text="Kode" />
                 <TableColumn fx:id="colJudul" prefWidth="400.0" text="Judul" />

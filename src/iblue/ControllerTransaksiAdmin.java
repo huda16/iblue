@@ -6,12 +6,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -41,6 +46,24 @@ public class ControllerTransaksiAdmin implements Initializable {
     private Button btnUpdate;
 
     @FXML
+    private Button btnProfil;
+
+    @FXML
+    private Button btnDaftarMahasiswa;
+
+    @FXML
+    private Button btnDaftarPeminjaman;
+
+    @FXML
+    private Button btnDaftarBuku;
+
+    @FXML
+    private Button btnDaftarJurnal;
+
+    @FXML
+    private Button btnDaftarArtikel;
+
+    @FXML
     private TableView<Peminjaman> tPeminjaman;
 
     @FXML
@@ -64,13 +87,83 @@ public class ControllerTransaksiAdmin implements Initializable {
     @FXML
     private TableColumn colAksi;
 
-    public void handleButtonAction(MouseEvent event) {
-        if (event.getSource() == btnPinjam) {
+    public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btnPinjam) {
             pinjamBuku();
-        } else if (event.getSource() == btnUpdate) {
+        } else if (actionEvent.getSource() == btnUpdate) {
             updateTransaksi();
-        } else if (event.getSource() == btnClear) {
+        } else if (actionEvent.getSource() == btnClear) {
             bersih();
+        } else if (actionEvent.getSource() == btnDaftarMahasiswa) {
+            try {
+                // add you loading or delays - ;-)
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                // stage.setMaximized(true);
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarPeminjaman) {
+            try {
+                // add you loading or delays - ;-)
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                // stage.setMaximized(true);
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarJurnal) {
+            try {
+                // add you loading or delays - ;-)
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                // stage.setMaximized(true);
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarArtikel) {
+            try {
+                // add you loading or delays - ;-)
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                // stage.setMaximized(true);
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarBuku) {
+            try {
+                // add you loading or delays - ;-)
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                // stage.setMaximized(true);
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }
 
@@ -136,7 +229,7 @@ public class ControllerTransaksiAdmin implements Initializable {
         showPeminjaman();
     }
 
-    private void setFieldValueFromTable(){
+    private void setFieldValueFromTable() {
 
         tPeminjaman.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -148,9 +241,9 @@ public class ControllerTransaksiAdmin implements Initializable {
 
     }
 
-    private void updateTransaksi(){
+    private void updateTransaksi() {
         String inIdTransaksi = idTransaksi.getText();
-        String query = "CALL update_transaction("+ inIdTransaksi +")";
+        String query = "CALL update_transaction(" + inIdTransaksi + ")";
         executeQuery(query);
         showPeminjaman();
     }

@@ -28,42 +28,42 @@
 				<Font name="Open Sans Regular" size="24.0" />
 			</font>
 		</Text>
-		<Button graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
+		<Button fx:id="btnProfil" graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
 				<Font name="Open Sans Regular" size="18.0" />
 			</font>
 		</Button>
-		<Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
+		<Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
 				<Font name="Open Sans Regular" size="18.0" />
 			</font>
 		</Button>
-		<Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
+		<Button fx:id="btnDaftarPeminjaman" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
 				<Font name="Open Sans Regular" size="18.0" />
 			</font>
 		</Button>
-		<Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+		<Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
 				<Font name="Open Sans Regular" size="18.0" />
 			</font>
 		</Button>
-		<Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
+		<Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
 				<Font name="Open Sans Regular" size="18.0" />
 			</font>
 		</Button>
-		<Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
+		<Button fx:id="btnDaftarArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
 			<graphic>
 			</graphic>
 			<font>
@@ -89,12 +89,12 @@
 							<Insets top="24.0" />
 						</BorderPane.margin>
                   <Label fx:id="lblErrors" prefHeight="17.0" prefWidth="152.0" />
-                  <Button fx:id="btnUpdate" mnemonicParsing="false" onMouseClicked="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Update" textFill="WHITE">
+                  <Button fx:id="btnUpdate" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Update" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-						<Button fx:id="btnPinjam" mnemonicParsing="false" onMouseClicked="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Pinjam" textAlignment="CENTER" textFill="WHITE">
+						<Button fx:id="btnPinjam" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Pinjam" textAlignment="CENTER" textFill="WHITE">
 							<font>
 								<Font name="System Bold" size="16.0" />
 							</font>
@@ -102,7 +102,7 @@
 								<Insets bottom="6.0" left="14.0" right="14.0" top="6.0" />
 							</padding>
 						</Button>
-						<Button fx:id="btnClear" layoutX="188.0" layoutY="26.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Clear" textAlignment="CENTER" textFill="WHITE">
+						<Button fx:id="btnClear" layoutX="188.0" layoutY="26.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Clear" textAlignment="CENTER" textFill="WHITE">
 							<font>
 								<Font name="System Bold" size="16.0" />
 							</font>

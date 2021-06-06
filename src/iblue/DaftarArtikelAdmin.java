@@ -12,8 +12,7 @@ public class DaftarArtikelAdmin extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml"));
 
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
 

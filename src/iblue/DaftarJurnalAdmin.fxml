@@ -18,66 +18,68 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #273C4F #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerJurnalAdmin">
-    <VBox layoutY="-2.0" prefHeight="1080.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
-        <Pane prefHeight="200.0" prefWidth="200.0">
-            <children>
-                <Text fill="WHITE" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue" textAlignment="CENTER" wrappingWidth="300.0">
-                    <font>
-                        <Font name="Montserrat ExtraBold" size="36.0" />
-                    </font>
-                </Text>
-                <Text fill="WHITE" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan" textAlignment="CENTER" wrappingWidth="300.0">
-                    <font>
-                        <Font name="Open Sans Regular" size="24.0" />
-                    </font>
-                </Text>
-            </children>
-        </Pane>
-        <Button graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-        </Button>
-        <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-        </Button>
-        <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-        </Button>
-        <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-        </Button>
-        <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-        </Button>
-        <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
-            <graphic>
-            </graphic>
-            <font>
-                <Font name="Open Sans Regular" size="18.0" />
-            </font>
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-        </Button>
+    <VBox layoutY="-2.0" prefHeight="1065.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+        <children>
+            <Pane prefHeight="200.0" prefWidth="200.0">
+                <children>
+                    <Text fill="WHITE" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue" textAlignment="CENTER" wrappingWidth="300.0">
+                        <font>
+                            <Font name="Montserrat ExtraBold" size="36.0" />
+                        </font>
+                    </Text>
+                    <Text fill="WHITE" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan" textAlignment="CENTER" wrappingWidth="300.0">
+                        <font>
+                            <Font name="Open Sans Regular" size="24.0" />
+                        </font>
+                    </Text>
+                </children>
+            </Pane>
+            <Button fx:id="btnProfil" graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnDaftarPeminjaman" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+            </Button>
+            <Button fx:id="btnDaftarArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
+                <graphic>
+                </graphic>
+                <font>
+                    <Font name="Open Sans Regular" size="18.0" />
+                </font>
+                <opaqueInsets>
+                    <Insets />
+                </opaqueInsets>
+            </Button>
+        </children>
     </VBox>
     <BorderPane layoutX="300.0" prefHeight="1078.0" prefWidth="1000.0">
         <top>
