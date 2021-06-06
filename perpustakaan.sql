@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2021 at 09:22 AM
+-- Generation Time: Jun 06, 2021 at 04:43 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `perpustakaan`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `add_transaction` (IN `idPeminjam` INT(11), IN `idBuku` VARCHAR(255))  begin
+declare exit handler for sqlexception
+begin
+rollback;
+end;
+START TRANSACTION;
+INSERT INTO transaksi (idPeminjam, idBuku, tanggalPinjam, batasTanggal) VALUES (idPeminjam, idBuku, now(), (now()+INTERVAL 7 DAY));
+COMMIT;
+end$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_transaction` (IN `idTransaksi` INT(11))  begin
+UPDATE transaksi SET tanggalKembali=now() WHERE id=idTransaksi;
+end$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -44,16 +64,16 @@ CREATE TABLE `admin` (
 
 CREATE TABLE `artikel` (
   `id` int(11) NOT NULL,
-  `id_jurnal` int(11) NOT NULL,
+  `idJurnal` varchar(255) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `nomor` int(11) NOT NULL,
-  `halaman_awal` int(11) NOT NULL,
-  `halaman_akhir` int(11) NOT NULL,
+  `halamanAwal` int(11) NOT NULL,
+  `halamanAkhir` int(11) NOT NULL,
   `doi` varchar(255) DEFAULT NULL,
-  `tanggal_didaftarkan` date DEFAULT NULL,
-  `tanggal_direview` date DEFAULT NULL,
-  `tanggal_dipublikasikan` date NOT NULL,
-  `tgl_input` datetime DEFAULT NULL
+  `tanggalDidaftarkan` date DEFAULT NULL,
+  `tanggalDireview` date DEFAULT NULL,
+  `tanggalDipublikasikan` date DEFAULT NULL,
+  `tglInput` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -63,14 +83,13 @@ CREATE TABLE `artikel` (
 --
 
 CREATE TABLE `buku` (
-  `id` int(11) NOT NULL,
-  `kode_buku` varchar(100) NOT NULL,
-  `judul_buku` varchar(100) NOT NULL,
+  `kodeBuku` varchar(255) NOT NULL,
+  `judulBuku` varchar(100) NOT NULL,
   `pengarang` varchar(100) NOT NULL,
   `penerbit` varchar(100) NOT NULL,
   `kota` varchar(100) NOT NULL,
   `edisi` int(11) DEFAULT NULL,
-  `tanggal_publikasi` date NOT NULL,
+  `tanggalPublikasi` date NOT NULL,
   `isbn` int(11) DEFAULT NULL,
   `stok` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -79,10 +98,30 @@ CREATE TABLE `buku` (
 -- Dumping data for table `buku`
 --
 
-INSERT INTO `buku` (`id`, `kode_buku`, `judul_buku`, `pengarang`, `penerbit`, `kota`, `edisi`, `tanggal_publikasi`, `isbn`, `stok`) VALUES
-(1, 'B001', 'Doraemon', 'Fujiko F. Fujio', '', '', NULL, '0000-00-00', NULL, 0),
-(2, 'C001', 'Laskar Pelangi', 'Andrea Hirata', '', '', NULL, '0000-00-00', NULL, 0),
-(3, 'D001', 'Harry Potter', 'J.K. Rowling', '', '', NULL, '0000-00-00', NULL, 0);
+INSERT INTO `buku` (`kodeBuku`, `judulBuku`, `pengarang`, `penerbit`, `kota`, `edisi`, `tanggalPublikasi`, `isbn`, `stok`) VALUES
+('B001', 'Doraemon', 'Fujiko F. Fujio', '', '', NULL, '2021-06-08', NULL, 0),
+('C001', 'Laskar Pelangi', 'Andrea Hirata', '', '', NULL, '2021-06-10', NULL, 0),
+('D001', 'Harry Potter', 'J.K. Rowling', '', '', NULL, '2021-06-18', NULL, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `denda_transaksi`
+--
+
+CREATE TABLE `denda_transaksi` (
+  `id` int(11) NOT NULL,
+  `idTransaksi` int(11) NOT NULL,
+  `denda` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `denda_transaksi`
+--
+
+INSERT INTO `denda_transaksi` (`id`, `idTransaksi`, `denda`) VALUES
+(2, 2, 0),
+(4, 3, 35000);
 
 -- --------------------------------------------------------
 
@@ -91,7 +130,7 @@ INSERT INTO `buku` (`id`, `kode_buku`, `judul_buku`, `pengarang`, `penerbit`, `k
 --
 
 CREATE TABLE `jurnal` (
-  `id` int(11) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `judul` varchar(255) NOT NULL,
   `tahun` year(4) NOT NULL,
   `volume` varchar(50) NOT NULL
@@ -114,6 +153,13 @@ CREATE TABLE `mahasiswa` (
   `aktif` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `mahasiswa`
+--
+
+INSERT INTO `mahasiswa` (`id`, `name`, `email`, `password`, `prodi`, `telepon`, `alamat`, `aktif`) VALUES
+(1902748, 'Fityandhiya', 'fityandhiya@upi.edu', 'fityan', 'Rekayasa Perangkat Lunak', '081372527392', 'Bandung', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -122,13 +168,37 @@ CREATE TABLE `mahasiswa` (
 
 CREATE TABLE `transaksi` (
   `id` int(11) NOT NULL,
-  `id_admin` int(11) NOT NULL,
-  `id_peminjam` int(11) DEFAULT NULL,
-  `id_buku` int(11) NOT NULL,
-  `tanggal_pinjam` datetime DEFAULT NULL,
-  `batas_tanggal` datetime DEFAULT NULL,
-  `tanggal_kembali` datetime NOT NULL
+  `idPeminjam` int(11) DEFAULT NULL,
+  `idBuku` varchar(255) NOT NULL,
+  `tanggalPinjam` datetime DEFAULT NULL,
+  `batasTanggal` datetime DEFAULT NULL,
+  `tanggalKembali` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id`, `idPeminjam`, `idBuku`, `tanggalPinjam`, `batasTanggal`, `tanggalKembali`) VALUES
+(1, 1902748, 'B001', '2021-06-06 08:47:04', '2021-06-06 08:47:11', '2021-06-13 09:00:55'),
+(2, 1902748, 'C001', '2021-06-06 08:48:29', '2021-06-06 08:48:36', '2021-06-05 09:01:35'),
+(3, 1902748, 'D001', '2021-06-06 08:52:07', '2021-06-13 08:52:07', '2021-06-20 09:21:42');
+
+--
+-- Triggers `transaksi`
+--
+DELIMITER $$
+CREATE TRIGGER `add_denda` AFTER UPDATE ON `transaksi` FOR EACH ROW begin
+Declare denda int default 0;
+if(datediff(new.tanggalKembali, new.batasTanggal) < 0) then
+set denda = 0;
+else
+set denda = datediff(new.tanggalKembali, new.batasTanggal)*5000;
+end if;
+INSERT INTO denda_transaksi (idTransaksi, denda) VALUES (new.id, denda); 
+end
+$$
+DELIMITER ;
 
 --
 -- Indexes for dumped tables
@@ -145,13 +215,20 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `artikel`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_jurnal` (`id_jurnal`);
+  ADD KEY `id_jurnal` (`idJurnal`);
 
 --
 -- Indexes for table `buku`
 --
 ALTER TABLE `buku`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`kodeBuku`);
+
+--
+-- Indexes for table `denda_transaksi`
+--
+ALTER TABLE `denda_transaksi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_transaksi` (`idTransaksi`);
 
 --
 -- Indexes for table `jurnal`
@@ -170,9 +247,8 @@ ALTER TABLE `mahasiswa`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_buku` (`id_buku`),
-  ADD KEY `id_admin` (`id_admin`),
-  ADD KEY `id_peminjam` (`id_peminjam`);
+  ADD KEY `id_buku` (`idBuku`),
+  ADD KEY `id_peminjam` (`idPeminjam`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -185,22 +261,16 @@ ALTER TABLE `artikel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `buku`
+-- AUTO_INCREMENT for table `denda_transaksi`
 --
-ALTER TABLE `buku`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `jurnal`
---
-ALTER TABLE `jurnal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `denda_transaksi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -210,15 +280,20 @@ ALTER TABLE `transaksi`
 -- Constraints for table `artikel`
 --
 ALTER TABLE `artikel`
-  ADD CONSTRAINT `artikel_ibfk_1` FOREIGN KEY (`id_jurnal`) REFERENCES `jurnal` (`id`);
+  ADD CONSTRAINT `artikel_ibfk_1` FOREIGN KEY (`idJurnal`) REFERENCES `jurnal` (`id`);
+
+--
+-- Constraints for table `denda_transaksi`
+--
+ALTER TABLE `denda_transaksi`
+  ADD CONSTRAINT `denda_transaksi_ibfk_1` FOREIGN KEY (`idTransaksi`) REFERENCES `transaksi` (`id`);
 
 --
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id`),
-  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id`),
-  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`id_peminjam`) REFERENCES `mahasiswa` (`id`);
+  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idPeminjam`) REFERENCES `mahasiswa` (`id`),
+  ADD CONSTRAINT `transaksi_ibfk_4` FOREIGN KEY (`idBuku`) REFERENCES `buku` (`kodeBuku`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
