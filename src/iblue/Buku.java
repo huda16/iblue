@@ -4,42 +4,42 @@ import java.util.Date;
 
 public class Buku {
 
-    private String kode_buku;
-    private String judul_buku;
+    private String kodeBuku;
+    private String judulBuku;
     private String pengarang;
     private String penerbit;
     private String kota;
     private int edisi;
-    private Date tanggal_publikasi;
+    private Date tanggalPublikasi;
     private int isbn;
     private int stok;
 
-    public Buku(String kode_buku, String judul_buku, String pengarang, String penerbit, String kota, int edisi, Date tanggal_publikasi, int isbn, int stok) {
-        this.kode_buku = kode_buku;
-        this.judul_buku = judul_buku;
+    public Buku(String kodeBuku, String judulBuku, String pengarang, String penerbit, String kota, int edisi, Date tanggalPublikasi, int isbn, int stok) {
+        this.kodeBuku = kodeBuku;
+        this.judulBuku = judulBuku;
         this.pengarang = pengarang;
         this.penerbit = penerbit;
         this.kota = kota;
         this.edisi = edisi;
-        this.tanggal_publikasi = tanggal_publikasi;
+        this.tanggalPublikasi = tanggalPublikasi;
         this.isbn = isbn;
         this.stok = stok;
     }
 
-    public String getKode_buku() {
-        return kode_buku;
+    public String getKodeBuku() {
+        return kodeBuku;
     }
 
-    public void setKode_buku(String kode_buku) {
-        this.kode_buku = kode_buku;
+    public void setKodeBuku(String kodeBuku) {
+        this.kodeBuku = kodeBuku;
     }
 
-    public String getJudul_buku() {
-        return judul_buku;
+    public String getJudulBuku() {
+        return judulBuku;
     }
 
-    public void setJudul_buku(String judul_buku) {
-        this.judul_buku = judul_buku;
+    public void setJudulBuku(String judulBuku) {
+        this.judulBuku = judulBuku;
     }
 
     public String getPengarang() {
@@ -74,12 +74,12 @@ public class Buku {
         this.edisi = edisi;
     }
 
-    public Date getTanggal_publikasi() {
-        return tanggal_publikasi;
+    public Date getTanggalPublikasi() {
+        return tanggalPublikasi;
     }
 
-    public void setTanggal_publikasi(Date tanggal_publikasi) {
-        this.tanggal_publikasi = tanggal_publikasi;
+    public void setTanggalPublikasi(Date tanggalPublikasi) {
+        this.tanggalPublikasi = tanggalPublikasi;
     }
 
     public int getIsbn() {
@@ -97,5 +97,4 @@ public class Buku {
     public void setStok(int stok) {
         this.stok = stok;
     }
-
 }
