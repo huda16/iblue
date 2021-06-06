@@ -51,7 +51,7 @@ public class ControllerLoginMahasiswa implements Initializable {
                     Stage stage = (Stage) node.getScene().getWindow();
                     //stage.setMaximized(true);
                     stage.close();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("daftarBukuAdmin.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
                     stage.setScene(scene);
                     stage.show();
 
