@@ -24,6 +24,11 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="lib" level="project" />
+<<<<<<< HEAD
+    <orderEntry type="library" name="mysql-connector-java-8.0.24" level="project" />
+    <orderEntry type="library" name="fontawesomefx-8.2" level="project" />
+=======
     <orderEntry type="library" name="mysql-connector-java-8.0.25" level="project" />
+>>>>>>> 00807fcda5ab212429f294d86db265485d071f26
   </component>
 </module>
