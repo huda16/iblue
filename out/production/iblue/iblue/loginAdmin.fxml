@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -9,12 +10,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerLoginAdmin">
    <left>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #5AB0E3;" BorderPane.alignment="CENTER" />
+      <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #5AB0E3;" BorderPane.alignment="CENTER">
+         <children>
+            <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="129.0" layoutY="198.0" size="100px" />
+            <Text fill="WHITE" layoutX="77.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="87.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampus UPI Cibiru">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
    </left>
-   <right>
+   <center>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
             <Text fill="#5ab0e3" layoutX="135.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iblue">
@@ -22,14 +35,17 @@
                   <Font name="Montserrat ExtraBold" size="30.0" />
                </font>
             </Text>
-            <TextField fx:id="txtUsername" layoutX="101.0" layoutY="191.0" promptText="Username" />
-            <Text layoutX="101.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-            <Text layoutX="103.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-            <PasswordField fx:id="txtPassword" layoutX="101.0" layoutY="259.0" promptText="Password" />
-            <Button fx:id="btnSubmit" layoutX="146.0" layoutY="314.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="28.0" prefWidth="58.0" style="-fx-background-color: #5AB0E3;" text="Button" textFill="WHITE" />
+            <TextField fx:id="txtUsername" layoutX="115.0" layoutY="171.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;" />
+            <PasswordField fx:id="txtPassword" layoutX="115.0" layoutY="241.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;" />
+            <Button fx:id="btnSubmit" layoutX="146.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="28.0" prefWidth="58.0" style="-fx-background-color: #5AB0E3;" text="Login" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
             <Button fx:id="btnClose" layoutX="314.0" layoutY="14.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="11.0" style="-fx-background-color: #5AB0E3;" text="x" textFill="WHITE" />
-            <Label fx:id="lblErrors" layoutX="100.0" layoutY="140.0" prefHeight="17.0" prefWidth="151.0" />
+            <Label fx:id="lblErrors" layoutX="100.0" layoutY="134.0" prefHeight="17.0" prefWidth="151.0" />
+            <FontAwesomeIcon fill="#5ab0e3" glyphName="USER" layoutX="88.0" layoutY="192.0" size="20px" />
+            <FontAwesomeIcon fill="#5ab0e3" glyphName="KEY" layoutX="86.0" layoutY="263.0" size="20px" />
          </children>
       </AnchorPane>
-   </right>
+   </center>
 </BorderPane>

@@ -1,14 +1,210 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="iblue.DaftarArtikelAdmin"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="720.0" prefWidth="1274.0" style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
+    <children>
+        <VBox layoutY="-2.0" prefHeight="733.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+            <children>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue" textAlignment="CENTER" wrappingWidth="300.0">
+                    <font>
+                        <Font name="Montserrat ExtraBold" size="36.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan" textAlignment="CENTER" wrappingWidth="300.0">
+                    <font>
+                        <Font name="Open Sans Regular" size="24.0" />
+                    </font>
+                </Text>
+                <Button graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                </Button>
+                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                </Button>
+                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                </Button>
+                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                </Button>
+                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                </Button>
+                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                    <font>
+                        <Font name="Open Sans Regular" size="18.0" />
+                    </font>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </Button>
+            </children>
+        </VBox>
+        <VBox layoutX="300.0" layoutY="-2.0" prefHeight="300.0" prefWidth="184.0" spacing="30.0" AnchorPane.leftAnchor="300.0">
+            <children>
+                <Label text="ID Jurnal" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Judul Artikel" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Pengarang" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Halaman Awal" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Halaman Akhir" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding></VBox>
+        <VBox layoutX="484.0" prefHeight="300.0" prefWidth="300.0" spacing="20.0">
+            <children>
+                <TextField fx:id="tfIdJurnal" />
+                <TextField fx:id="tfJudul" />
+                <TextField fx:id="tfPengarang" />
+                <TextField fx:id="tfHalamanAwal" />
+                <TextField fx:id="tfHalamanAkhir" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="784.0" prefHeight="224.0" prefWidth="184.0" spacing="30.0">
+            <children>
+                <Label text="Tanggal Didaftarkan" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Tanggal Direview" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Tanggal Dipublikasikan" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="DOI" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+        <VBox layoutX="968.0" prefHeight="223.0" prefWidth="312.0" spacing="20.0">
+            <children>
+                <DatePicker fx:id="tfDaftar" prefHeight="31.0" prefWidth="270.0" />
+            <DatePicker fx:id="tfReview" prefHeight="31.0" prefWidth="270.0" />
+            <DatePicker fx:id="tfPublikasi" prefHeight="31.0" prefWidth="270.0" />
+                <TextField fx:id="tfDoi">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </TextField>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+        <HBox layoutX="776.0" layoutY="217.0" prefHeight="81.0" prefWidth="504.0">
+            <children>
+                <Button fx:id="btnInsertArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Insert" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <graphic>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnUpdateArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Update" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <graphic>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnDeleteArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Delete" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets right="20.0" />
+                    </HBox.margin>
+                    <graphic>
+                    </graphic>
+                </Button>
+                <Button fx:id="btnSearchArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Search" textFill="WHITE">
+                    <graphic>
+                    </graphic>
+                </Button>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
+            </padding>
+        </HBox>
+        <TableView fx:id="tArtikel" layoutX="319.0" layoutY="298.0" prefHeight="419.0" prefWidth="932.0">
+            <columns>
+            <TableColumn fx:id="colIdArtikel" prefWidth="34.0" text="ID" />
+                <TableColumn fx:id="colIdJurnal" prefWidth="75.0" text="ID Jurnal" />
+            <TableColumn fx:id="colNomor" prefWidth="62.0" text="Nomor" />
+                <TableColumn fx:id="colJudulArtikel" prefWidth="168.0" text="Judul Artikel" />
+                <TableColumn fx:id="colPengarang" prefWidth="135.0" text="Pengarang" />
+                <TableColumn fx:id="colAwal" prefWidth="51.0" text="Awal" />
+            <TableColumn fx:id="colAkhir" prefWidth="53.0" text="Akhir" />
+                <TableColumn fx:id="colDoi" prefWidth="64.0" text="DOI" />
+                <TableColumn fx:id="colDidaftarkan" prefWidth="92.0" text="Didaftarkan" />
+                <TableColumn fx:id="colDireview" minWidth="0.0" prefWidth="82.0" text="Direview" />
+                <TableColumn fx:id="colDipublikasikan" prefWidth="115.0" text="Dipublikasikan" />
+            </columns>
+        </TableView>
+    </children>
 </AnchorPane>
