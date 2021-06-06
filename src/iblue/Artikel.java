@@ -18,7 +18,7 @@ public class Artikel {
 
     public Artikel(int id, String idJurnal, String judul, String pengarang, int nomor, int halamanAwal, int halamanAkhir, String doi, Date tanggalDidaftarkan, Date tanggalDireview, Date tanggalDipublikasikan){
         this.id = id;
-        this.idJurnal =idJurnal;
+        this.idJurnal = idJurnal;
         this.judul = judul;
         this.pengarang = pengarang;
         this.nomor = nomor;

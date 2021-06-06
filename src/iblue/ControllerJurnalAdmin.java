@@ -2,18 +2,23 @@ package iblue;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.w3c.dom.Text;
 
+import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.Year;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class ControllerJurnalAdmin implements Initializable {
@@ -28,7 +33,7 @@ public class ControllerJurnalAdmin implements Initializable {
     private Button btnDeleteJurnal;
 
     @FXML
-    private Button btnSearchJurnal;
+    private Button btnClearJurnal;
 
     @FXML
     private TextField tfKode;
@@ -66,8 +71,8 @@ public class ControllerJurnalAdmin implements Initializable {
             updateJurnal();
         } else if (actionEvent.getSource() == btnDeleteJurnal){
             deleteJurnal();
-        } else if (actionEvent.getSource() == btnSearchJurnal){
-            searchJurnal();
+        } else if (actionEvent.getSource() == btnClearJurnal){
+            clearJurnal();
         }
 
     }
@@ -75,6 +80,7 @@ public class ControllerJurnalAdmin implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showJurnal();
+        setFieldValueFromTable();
     }
 
     public Connection getConnection() {
@@ -122,7 +128,13 @@ public class ControllerJurnalAdmin implements Initializable {
     }
 
     private void insertJurnal(){
-        String query = "INSERT INTO jurnal VALUES('" + tfKode.getText() + "','" + tfJudul.getText() + "','"  + tfTahun.getText() + "'," + tfVolume.getText() + ")";
+
+        String inKode = tfKode.getText();
+        String inJudul = tfJudul.getText();
+        String inTahun = tfTahun.getText();
+        String inVolume = tfVolume.getText();
+
+        String query = "INSERT INTO jurnal VALUES('" + inKode + "','" + inJudul + "','"  + inTahun + "'," + inVolume + ")";
         executeQuery(query);
         showJurnal();
     }
@@ -139,7 +151,11 @@ public class ControllerJurnalAdmin implements Initializable {
         showJurnal();
     }
 
-    private void searchJurnal(){
+    private void clearJurnal(){
+        tfKode.setText("");
+        tfJudul.setText("");
+        tfTahun.setText("");
+        tfVolume.setText("");
     }
 
     private void executeQuery(String query) {
@@ -153,16 +169,22 @@ public class ControllerJurnalAdmin implements Initializable {
         }
     }
 
-    private void executeQuerySelect(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeQuery(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+    private void setFieldValueFromTable(){
+
+        tJurnal.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Jurnal jurnal = tJurnal.getItems().get(tJurnal.getSelectionModel().getSelectedIndex());
+                tfKode.setText(jurnal.getKode());
+                tfJudul.setText(jurnal.getJudul());
+                tfTahun.setText(jurnal.getTahun());
+                tfVolume.setText(String.valueOf(jurnal.getVolume()));
+            }
+        });
+
     }
+
+
 
 
 }

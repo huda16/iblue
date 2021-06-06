@@ -1,5 +1,7 @@
 package iblue;
 
+import java.time.Year;
+
 public class Jurnal {
 
     private String kode;

@@ -2,10 +2,12 @@ package iblue;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -13,6 +15,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -20,7 +26,13 @@ import java.util.ResourceBundle;
 public class ControllerArtikelAdmin implements Initializable {
 
     @FXML
+    private TextField tfIdArtikel;
+
+    @FXML
     private TextField tfIdJurnal;
+
+    @FXML
+    private TextField tfNomor;
 
     @FXML
     private TextField tfJudul;
@@ -56,7 +68,7 @@ public class ControllerArtikelAdmin implements Initializable {
     private Button btnDeleteArtikel;
 
     @FXML
-    private Button btnSearchArtikel;
+    private Button btnClearArtikel;
 
     @FXML
     private TableView<Artikel> tArtikel;
@@ -102,8 +114,8 @@ public class ControllerArtikelAdmin implements Initializable {
             updateArtikel();
         } else if (actionEvent.getSource() == btnDeleteArtikel){
             deleteArtikel();
-        } else if (actionEvent.getSource() == btnSearchArtikel){
-            searchArtikel();
+        } else if (actionEvent.getSource() == btnClearArtikel){
+            clearArtikel();
         }
 
     }
@@ -111,6 +123,7 @@ public class ControllerArtikelAdmin implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showArtikel();
+        setFieldValueFromTable();
     }
 
     public Connection getConnection() {
@@ -137,16 +150,16 @@ public class ControllerArtikelAdmin implements Initializable {
             Artikel artikel;
             while (resultSet.next()) {
                 artikel = new Artikel(resultSet.getInt("id"),
-                                    resultSet.getString("idJurnal"),
-                                    resultSet.getString("judul"),
-                                    resultSet.getString("pengarang"),
-                                    resultSet.getInt("nomor"),
-                                    resultSet.getInt("halamanAwal"),
-                                    resultSet.getInt("halamanAkhir"),
-                                    resultSet.getString("doi"),
-                                    resultSet.getDate("tanggalDidaftarkan"),
-                                    resultSet.getDate("tanggalDireview"),
-                                    resultSet.getDate("tanggalDipublikasikan"));
+                        resultSet.getString("idJurnal"),
+                        resultSet.getString("judul"),
+                        resultSet.getString("pengarang"),
+                        resultSet.getInt("nomor"),
+                        resultSet.getInt("halamanAwal"),
+                        resultSet.getInt("halamanAkhir"),
+                        resultSet.getString("doi"),
+                        resultSet.getDate("tanggalDidaftarkan"),
+                        resultSet.getDate("tanggalDireview"),
+                        resultSet.getDate("tanggalDipublikasikan"));
                 daftarArtikel.add(artikel);
             }
         } catch (Exception e) {
@@ -166,42 +179,87 @@ public class ControllerArtikelAdmin implements Initializable {
         colAkhir.setCellValueFactory(new PropertyValueFactory<>("halamanAkhir"));
         colDoi.setCellValueFactory(new PropertyValueFactory<>("doi"));
         colDidaftarkan.setCellValueFactory(new PropertyValueFactory<>("tanggalDidaftarkan"));
-        colDireview.setCellValueFactory(new PropertyValueFactory<>("tanggalDipublikasikan"));
+        colDireview.setCellValueFactory(new PropertyValueFactory<>("tanggalDireview"));
         colDipublikasikan.setCellValueFactory(new PropertyValueFactory<>("tanggalDipublikasikan"));
         tArtikel.setItems(list);
     }
 
     private void insertArtikel(){
-//        String query = "INSERT INTO buku VALUES('" + tfKode.getText() + "','" + tfJudul.getText() + "','" +
-//                tfNamaPengarang.getText() + "','" + tfPenerbit.getText() + "','" + tfKota.getText()
-//                + "'," + tfEdisi.getText() + ",'" + tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-//                + "'," + tfIsbn.getText() + "," + tfStok.getText() + ");";
-//        executeQuery(query);
-//        showArtikel();
+        String inIdJurnal = tfIdJurnal.getText();
+        String inJudul = tfJudul.getText();
+        String inPengarang = tfPengarang.getText();
+        String inNomor = tfNomor.getText();
+        String inHalamanAwal = tfHalamanAwal.getText();
+        String inHalamanAkhir = tfHalamanAkhir.getText();
+        String inDoi = tfDoi.getText();
+        LocalDate dateDidaftarkan = tfDaftar.getValue();
+        LocalDate dateDireview = tfReview.getValue();
+        LocalDate dateDipublikasikan = tfPublikasi.getValue();
+        String inTanggalDidaftarkan = dateDidaftarkan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String inTanggalDireview = dateDireview.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String inTanggalDipublikasikan = dateDipublikasikan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        boolean isAfterDaftar = dateDireview.isAfter(dateDidaftarkan);
+        boolean isAfterReview = dateDipublikasikan.isAfter(dateDireview);
+        boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
+
+        if(isAfterDaftar && isAfterReview && isHalamanAkhirAfter){
+            String query = "INSERT INTO artikel VALUES (0, '" + inIdJurnal + "','" + inJudul + "','" +
+                    inPengarang + "'," + inNomor + "," + inHalamanAwal + "," + inHalamanAkhir +
+                    ",'" + inDoi + "','" + inTanggalDidaftarkan + "','" + inTanggalDireview
+                    + "','" + inTanggalDipublikasikan + "');";
+            executeQuery(query);
+            showArtikel();
+        }
     }
 
     private void updateArtikel(){
-//        String query = "UPDATE buku SET judulBuku = '" + tfJudul.getText() + "', pengarang = '" +
-//                tfNamaPengarang.getText() + "', penerbit = '" + tfPenerbit.getText() + "', kota = '" + tfKota.getText()
-//                + "', edisi = " + tfEdisi.getText() + ", tanggalPublikasi = '" + tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-//                + "', isbn = " + tfIsbn.getText() + ", stok = " + tfStok.getText()
-//                + " WHERE kodeBuku = '" + tfKode.getText() + "';";
-//        executeQuery(query);
-//        showArtikel();
+
+        String inIdArtikel = tfIdArtikel.getText();
+        String inIdJurnal = tfIdJurnal.getText();
+        String inJudul = tfJudul.getText();
+        String inPengarang = tfPengarang.getText();
+        String inNomor = tfNomor.getText();
+        String inHalamanAwal = tfHalamanAwal.getText();
+        String inHalamanAkhir = tfHalamanAkhir.getText();
+        String inDoi = tfDoi.getText();
+        LocalDate dateDidaftarkan = tfDaftar.getValue();
+        LocalDate dateDireview = tfReview.getValue();
+        LocalDate dateDipublikasikan = tfPublikasi.getValue();
+        String inTanggalDidaftarkan = dateDidaftarkan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String inTanggalDireview = dateDireview.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String inTanggalDipublikasikan = dateDipublikasikan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        boolean isAfterDaftar = dateDireview.isAfter(dateDidaftarkan);
+        boolean isAfterReview = dateDipublikasikan.isAfter(dateDireview);
+        boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
+        String query = "UPDATE artikel SET idJurnal = '" + inIdJurnal + "', judul = '" + inJudul + "', pengarang = '" + inPengarang +
+                "', nomor = " + inNomor + ", halamanAwal = " + inHalamanAwal + ", halamanAkhir = " + inHalamanAkhir + ", doi = '" +
+                inDoi + "', tanggalDidaftarkan = '" + inTanggalDidaftarkan + "', tanggalDireview = '" + inTanggalDireview +
+                "', tanggalDipublikasikan = '" + inTanggalDipublikasikan + "' WHERE id = " + inIdArtikel + ";";
+
+        executeQuery(query);
+        showArtikel();
     }
 
     private void deleteArtikel(){
-//        String query = "DELETE FROM buku WHERE kodeBuku = '" + tfIdJurnal.getText() + "';";
-//        executeQuery(query);
-//        showArtikel();
+        String query = "DELETE FROM artikel WHERE id = '" + tfIdArtikel.getText() + "';";
+        executeQuery(query);
+        showArtikel();
     }
 
-    private void searchArtikel(){
-//        String query = "SELECT * FROM buku WHERE kodeBuku LIKE '%" + tfKode.getText() + "%' AND judulBuku LIKE '%" + tfJudul.getText() + "%' AND pengarang LIKE '%" +
-//                tfNamaPengarang.getText() + "%' AND penerbit LIKE '%" + tfPenerbit.getText() + "%' AND kota LIKE '%" + tfKota.getText()
-//                +  "%';";
-//        executeQuerySelect(query);
-//        showArtikel();
+    private void clearArtikel(){
+        tfIdArtikel.setText("");
+        tfIdJurnal.setText("");
+        tfJudul.setText("");
+        tfPengarang.setText("");
+        tfNomor.setText("");
+        tfHalamanAwal.setText("");
+        tfHalamanAkhir.setText("");
+        tfDoi.setText("");
+        tfDaftar.setValue(null);
+        tfReview.setValue(null);
+        tfPublikasi.setValue(null);
     }
 
     private void executeQuery(String query) {
@@ -213,6 +271,28 @@ public class ControllerArtikelAdmin implements Initializable {
         }catch(Exception ex){
             ex.printStackTrace();
         }
+    }
+
+    private void setFieldValueFromTable(){
+
+        tArtikel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Artikel artikel = tArtikel.getItems().get(tArtikel.getSelectionModel().getSelectedIndex());
+                tfIdArtikel.setText(String.valueOf(artikel.getId()));
+                tfIdJurnal.setText(artikel.getIdJurnal());
+                tfJudul.setText(artikel.getJudul());
+                tfPengarang.setText(artikel.getPengarang());
+                tfNomor.setText(String.valueOf(artikel.getNomor()));
+                tfHalamanAwal.setText(String.valueOf(artikel.getHalamanAwal()));
+                tfHalamanAkhir.setText(String.valueOf(artikel.getHalamanAkhir()));
+                tfDoi.setText(artikel.getDoi());
+                tfDaftar.setValue(LocalDate.parse(String.valueOf(artikel.getTanggalDidaftarkan())));
+                tfReview.setValue(LocalDate.parse(String.valueOf(artikel.getTanggalDireview())));
+                tfPublikasi.setValue(LocalDate.parse(String.valueOf(artikel.getTanggalDipublikasikan())));
+            }
+        });
+
     }
 
 

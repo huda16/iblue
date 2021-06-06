@@ -10,7 +10,7 @@ public class DaftarJurnalAdmin extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("daftarJurnalAdmin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml"));
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

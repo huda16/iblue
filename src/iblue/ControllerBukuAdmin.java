@@ -2,18 +2,20 @@ package iblue;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -57,7 +59,7 @@ public class ControllerBukuAdmin implements Initializable {
     private Button btnDeleteBuku;
 
     @FXML
-    private Button btnSearchBuku;
+    private Button btnClearBuku;
 
     @FXML
     private TableView<Buku> tBuku;
@@ -89,6 +91,7 @@ public class ControllerBukuAdmin implements Initializable {
     @FXML
     private TableColumn<Buku, Integer> colStok;
 
+    String query = "";
 
     public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
 
@@ -98,8 +101,8 @@ public class ControllerBukuAdmin implements Initializable {
             updateBuku();
         } else if (actionEvent.getSource() == btnDeleteBuku){
             deleteBuku();
-        } else if (actionEvent.getSource() == btnSearchBuku){
-            searchBuku();
+        } else if (actionEvent.getSource() == btnClearBuku){
+            clearBuku();
         }
 
     }
@@ -107,6 +110,7 @@ public class ControllerBukuAdmin implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         showBuku();
+        setFieldValueFromTable();
     }
 
     public Connection getConnection() {
@@ -166,8 +170,6 @@ public class ControllerBukuAdmin implements Initializable {
 
     private void insertBuku(){
 
-        String query = "";
-        
         String inKodeBuku = tfKode.getText();
         String inJudul = tfJudul.getText();
         String inPengarang = tfNamaPengarang.getText();
@@ -206,27 +208,45 @@ public class ControllerBukuAdmin implements Initializable {
     }
 
     private void updateBuku(){
-        String query = "UPDATE buku SET judulBuku = '" + tfJudul.getText() + "', pengarang = '" +
-                tfNamaPengarang.getText() + "', penerbit = '" + tfPenerbit.getText() + "', kota = '" + tfKota.getText()
-                + "', edisi = " + tfEdisi.getText() + ", tanggalPublikasi = '" + tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
-                + "', isbn = " + tfIsbn.getText() + ", stok = " + tfStok.getText()
-                + " WHERE kodeBuku = '" + tfKode.getText() + "';";
+
+        String inKodeBuku = tfKode.getText();
+        String inJudul = tfJudul.getText();
+        String inPengarang = tfNamaPengarang.getText();
+        String inPenerbit = tfPenerbit.getText();
+        String inKota = tfKota.getText();
+        String inEdisi = tfEdisi.getText();
+        String inPublikasi = tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String inIsbn = tfIsbn.getText();
+        String inStok = tfStok.getText();
+
+        String query = "UPDATE buku SET judulBuku = '" + inJudul + "', pengarang = '" +
+                inPengarang + "', penerbit = '" + inPenerbit + "', kota = '" + inKota
+                + "', edisi = " + inEdisi + ", tanggalPublikasi = '" + inPublikasi
+                + "', isbn = " + inIsbn + ", stok = " + inStok
+                + " WHERE kodeBuku = '" + inKodeBuku + "';";
         executeQuery(query);
         showBuku();
     }
 
     private void deleteBuku(){
-        String query = "DELETE FROM buku WHERE kodeBuku = '" + tfKode.getText() + "';";
+
+        String inKodeBuku = tfKode.getText();
+
+        String query = "DELETE FROM buku WHERE kodeBuku = '" + inKodeBuku + "';";
         executeQuery(query);
         showBuku();
     }
 
-    private void searchBuku(){
-        String query = "SELECT * FROM buku WHERE kodeBuku LIKE '%" + tfKode.getText() + "%' AND judulBuku LIKE '%" + tfJudul.getText() + "%' AND pengarang LIKE '%" +
-                tfNamaPengarang.getText() + "%' AND penerbit LIKE '%" + tfPenerbit.getText() + "%' AND kota LIKE '%" + tfKota.getText()
-                +  "%';";
-        executeQuerySelect(query);
-        showBuku();
+    private void clearBuku(){
+        tfKode.setText("");
+        tfJudul.setText("");
+        tfNamaPengarang.setText("");
+        tfPenerbit.setText("");
+        tfKota.setText("");
+        tfEdisi.setText("");
+        tfPublikasi.setValue(null);
+        tfIsbn.setText("");
+        tfStok.setText("");
     }
 
     private void executeQuery(String query) {
@@ -240,15 +260,24 @@ public class ControllerBukuAdmin implements Initializable {
         }
     }
 
-    private void executeQuerySelect(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeQuery(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
+    private void setFieldValueFromTable(){
+
+        tBuku.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                Buku buku = tBuku.getItems().get(tBuku.getSelectionModel().getSelectedIndex());
+                tfKode.setText(buku.getKodeBuku());
+                tfJudul.setText(buku.getJudulBuku());
+                tfNamaPengarang.setText(buku.getPengarang());
+                tfPenerbit.setText(buku.getPenerbit());
+                tfKota.setText(buku.getKota());
+                tfEdisi.setText(String.valueOf(buku.getEdisi()));
+                tfPublikasi.setValue(LocalDate.parse(String.valueOf(buku.getTanggalPublikasi())));
+                tfIsbn.setText(String.valueOf(buku.getIsbn()));
+                tfStok.setText(String.valueOf(buku.getStok()));
+            }
+        });
+
     }
 
 
