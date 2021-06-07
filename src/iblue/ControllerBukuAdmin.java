@@ -3,7 +3,6 @@ package iblue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,19 +10,16 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ControllerBukuAdmin implements Initializable {
@@ -115,16 +111,37 @@ public class ControllerBukuAdmin implements Initializable {
     @FXML
     private TableColumn<Buku, Integer> colStok;
 
-    String query = "";
+    public static boolean isInteger(String s, int radix) {
+        for (int i = 0; i < s.length(); i++) {
+            if (i == 0 && s.charAt(i) == '-') {
+                if (s.length() == 1) return false;
+                else continue;
+            }
+            if (Character.digit(s.charAt(i), radix) < 0) return false;
+        }
+        return true;
+    }
+
+    public static boolean isInteger(String s) {
+        return isInteger(s, 10);
+    }
 
     public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
 
         if(actionEvent.getSource() == btnInsertBuku){
-            insertBuku();
+            try {
+                insertBuku();
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
+            }
         } else if (actionEvent.getSource() == btnUpdateBuku){
             updateBuku();
         } else if (actionEvent.getSource() == btnDeleteBuku){
-            deleteBuku();
+            try {
+                deleteBuku();
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
+            }
         } else if (actionEvent.getSource() == btnClearBuku){
             clearBuku();
         } else if (actionEvent.getSource() == btnDaftarMahasiswa) {
@@ -132,7 +149,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("DaftarMahasiswa.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -144,7 +161,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("transaksiAdmin.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -156,7 +173,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("DaftarJurnalAdmin.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -168,7 +185,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("DaftarArtikelAdmin.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -180,7 +197,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("DaftarBukuAdmin.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -192,7 +209,7 @@ public class ControllerBukuAdmin implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("loginAdmin.fxml"))));
                 stage.setScene(scene);
                 stage.show();
 
@@ -277,7 +294,7 @@ public class ControllerBukuAdmin implements Initializable {
         });
     }
 
-    private void insertBuku(){
+    private void insertBuku() {
 
         String inKodeBuku = tfKode.getText();
         String inJudul = tfJudul.getText();
@@ -285,36 +302,74 @@ public class ControllerBukuAdmin implements Initializable {
         String inPenerbit = tfPenerbit.getText();
         String inKota = tfKota.getText();
         String inEdisi = tfEdisi.getText();
-        String inPublikasi = tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate inPublikasi = tfPublikasi.getValue();
         String inIsbn = tfIsbn.getText();
         String inStok = tfStok.getText();
 
-        if (inEdisi.equals("") && inIsbn.equals("")) {
-            query = "INSERT INTO buku VALUES('" + inKodeBuku + "','" + inJudul + "','" +
-                    inPengarang + "','" + inPenerbit + "','" + inKota + "', 0,'" +
-                    inPublikasi + "', 0," + inStok + ");";
-        } else if(inEdisi.equals("")){
-            query = "INSERT INTO buku VALUES('" + inKodeBuku + "','" + inJudul + "','" +
-                    inPengarang + "','" + inPenerbit + "','" + inKota + "', 0,'" + inPublikasi
-                    + "'," + inIsbn + "," + inStok + ");";
-        } else if (inIsbn.equals("")){
-            query = "INSERT INTO buku VALUES('" + inKodeBuku + "','" + inJudul + "','" +
-                    inPengarang + "','" + inPenerbit + "','" + inKota
-                    + "'," + inEdisi + ",'" + inPublikasi + "', 0," + inStok + ");";
-        } else {
-            query = "INSERT INTO buku VALUES('" + inKodeBuku + "','" + inJudul + "','" +
-                    inPengarang + "','" + inPenerbit + "','" + inKota + "'," +
-                    inEdisi + ",'" + inPublikasi + "'," + inIsbn + "," + inStok + ");";
+        /* field validation */
+        if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
+                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty()
+        ) {
+            JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Pengarang, Penerbit, " +
+                    "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
+            throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
+        }
+        else if (!isInteger(inIsbn) || !isInteger(inStok)) {
+            JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
         }
 
-        if(!(query.equals(""))){
-            executeQuery(query);
-            showBuku();
-            clearBuku();
-        } else {
-            JOptionPane.showMessageDialog(null, "Data Tidak Lengkap!");
+        String query = "INSERT INTO buku"
+                + "(kodeBuku, judulBuku, pengarang, penerbit, kota, edisi, tanggalPublikasi, isbn, stok)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inKodeBuku);
+            stmt.setString(2, inJudul);
+            stmt.setString(3, inPengarang);
+            stmt.setString(4, inPenerbit);
+            stmt.setString(5, inKota);
+            stmt.setDate(7, java.sql.Date.valueOf(Objects.requireNonNull(inPublikasi)));
+            stmt.setInt(9, Integer.parseInt(inStok));
+
+            /* non-required field */
+            if (!inEdisi.isEmpty()) {
+                stmt.setInt(6, Integer.parseInt(inEdisi));
+            } else {
+                stmt.setNull(6, Types.INTEGER);
+            }
+
+            if (!inIsbn.isEmpty()) {
+                stmt.setInt(8, Integer.parseInt(inIsbn));
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            /* execute query and getting how many rows affected after query execution */
+            int rowsAffected = stmt.executeUpdate();
+
+            /* showing success response */
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil ditambahkan");
+            }
+
+        } catch (SQLException sqlException) {
+            int errorCode = sqlException.getErrorCode();
+            int duplicatePKErrorCode = 1062;
+
+            if (errorCode == duplicatePKErrorCode) {
+                JOptionPane.showMessageDialog(null, "Kode Buku '"+ inKodeBuku +"' sudah digunakan! Harap gunakan kode lain.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menambahkan data buku!");
+            }
+            System.err.println(errorCode + ": " + sqlException.getMessage());
         }
 
+        showBuku();
+        clearBuku();
     }
 
     private void updateBuku(){
@@ -339,12 +394,40 @@ public class ControllerBukuAdmin implements Initializable {
         clearBuku();
     }
 
-    private void deleteBuku(){
+    private void deleteBuku() {
 
         String inKodeBuku = tfKode.getText();
 
-        String query = "DELETE FROM buku WHERE kodeBuku = '" + inKodeBuku + "';";
-        executeQuery(query);
+        /* field validation */
+        if (inKodeBuku.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Kolom kode harus terisi! Silahkan klik data buku yang akan dihapus terlebih dahulu.");
+            throw new NullPointerException("Kolom kode masih kosong!");
+        }
+
+        String query = "DELETE FROM buku WHERE kodeBuku = ?";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inKodeBuku);
+
+            /* execute query and getting how many rows affected after query execution */
+            int rowsAffected = stmt.executeUpdate();
+
+            /* showing alert response */
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil dihapus");
+            } else {
+                /* if value of kodeBuku not found */
+                JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal dihapus!");
+            }
+
+        } catch (SQLException sqlException) {
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menghapus data buku!");
+            System.err.println(sqlException.getMessage());
+        }
+
         showBuku();
         clearBuku();
     }
@@ -374,20 +457,17 @@ public class ControllerBukuAdmin implements Initializable {
 
     private void setFieldValueFromTable(){
 
-        tBuku.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                Buku buku = tBuku.getItems().get(tBuku.getSelectionModel().getSelectedIndex());
-                tfKode.setText(buku.getKodeBuku());
-                tfJudul.setText(buku.getJudulBuku());
-                tfNamaPengarang.setText(buku.getPengarang());
-                tfPenerbit.setText(buku.getPenerbit());
-                tfKota.setText(buku.getKota());
-                tfEdisi.setText(String.valueOf(buku.getEdisi()));
-                tfPublikasi.setValue(LocalDate.parse(String.valueOf(buku.getTanggalPublikasi())));
-                tfIsbn.setText(String.valueOf(buku.getIsbn()));
-                tfStok.setText(String.valueOf(buku.getStok()));
-            }
+        tBuku.setOnMouseClicked(mouseEvent -> {
+            Buku buku = tBuku.getItems().get(tBuku.getSelectionModel().getSelectedIndex());
+            tfKode.setText(buku.getKodeBuku());
+            tfJudul.setText(buku.getJudulBuku());
+            tfNamaPengarang.setText(buku.getPengarang());
+            tfPenerbit.setText(buku.getPenerbit());
+            tfKota.setText(buku.getKota());
+            tfEdisi.setText(String.valueOf(buku.getEdisi()));
+            tfPublikasi.setValue(LocalDate.parse(String.valueOf(buku.getTanggalPublikasi())));
+            tfIsbn.setText(String.valueOf(buku.getIsbn()));
+            tfStok.setText(String.valueOf(buku.getStok()));
         });
 
     }
