@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerLoginAdmin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerLoginAdmin">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #5AB0E3;" BorderPane.alignment="CENTER">
          <children>
@@ -51,7 +51,6 @@
                <font>
                   <Font name="Open Sans ExtraBold" size="24.0" />
                </font></Button>
-            <Button fx:id="btnClose" layoutX="827.0" layoutY="14.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="11.0" style="-fx-background-color: #5AB0E3;" text="x" textFill="WHITE" />
             <Label fx:id="lblErrors" layoutX="416.0" layoutY="130.0" prefHeight="17.0" prefWidth="151.0" />
             <FontAwesomeIcon fill="#5ab0e3" glyphName="USER" layoutX="282.0" layoutY="390.0" size="36" />
             <FontAwesomeIcon fill="#5ab0e3" glyphName="KEY" layoutX="278.0" layoutY="498.0" size="36" />

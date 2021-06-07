@@ -8,61 +8,61 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1274.0" style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerArtikelAdmin">
     <children>
-        <VBox layoutY="-2.0" prefHeight="733.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+        <VBox layoutY="-2.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
             <children>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue" textAlignment="CENTER" wrappingWidth="300.0">
-                    <font>
-                        <Font name="Montserrat ExtraBold" size="36.0" />
-                    </font>
-                </Text>
-                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan" textAlignment="CENTER" wrappingWidth="300.0">
-                    <font>
-                        <Font name="Open Sans Regular" size="24.0" />
-                    </font>
-                </Text>
-                <Button graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
+                <Pane prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <Text fill="WHITE" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue" textAlignment="CENTER" wrappingWidth="300.0">
+                            <font>
+                                <Font name="Montserrat ExtraBold" size="36.0" />
+                            </font>
+                        </Text>
+                        <Text fill="WHITE" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan" textAlignment="CENTER" wrappingWidth="300.0">
+                            <font>
+                                <Font name="Open Sans Regular" size="24.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
+                <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
+                <Button fx:id="btnDaftarPeminjaman" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
+                <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+                <Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
                         <Font name="Open Sans Regular" size="18.0" />
                     </font>
                 </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
-                    <graphic>
-                    </graphic>
-                    <font>
-                        <Font name="Open Sans Regular" size="18.0" />
-                    </font>
-                </Button>
-                <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
+                <Button fx:id="btnDaftarArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Artikel" textFill="WHITE">
                     <graphic>
                     </graphic>
                     <font>
@@ -72,139 +72,182 @@
                         <Insets />
                     </opaqueInsets>
                 </Button>
+            <Button fx:id="btnLogout" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Logout" textFill="WHITE">
+               <font>
+                  <Font name="Open Sans Regular" size="18.0" />
+               </font>
+            </Button>
             </children>
         </VBox>
-        <VBox layoutX="300.0" layoutY="-2.0" prefHeight="300.0" prefWidth="184.0" spacing="30.0" AnchorPane.leftAnchor="300.0">
+        <TableView fx:id="tArtikel" layoutX="334.0" layoutY="366.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="381.0" prefWidth="994.0">
+            <columns>
+                <TableColumn fx:id="colIdArtikel" prefWidth="30.0" text="ID" />
+                <TableColumn fx:id="colIdJurnal" prefWidth="75.0" text="ID Jurnal" />
+                <TableColumn fx:id="colNomor" prefWidth="60.0" text="Nomor" />
+                <TableColumn fx:id="colJudulArtikel" prefWidth="192.0" text="Judul Artikel" />
+                <TableColumn fx:id="colPengarang" prefWidth="136.0" text="Pengarang" />
+                <TableColumn fx:id="colAwal" prefWidth="52.0" text="Awal" />
+                <TableColumn fx:id="colAkhir" prefWidth="63.0" text="Akhir" />
+                <TableColumn fx:id="colDoi" prefWidth="83.0" text="DOI" />
+                <TableColumn fx:id="colDidaftarkan" prefWidth="101.0" text="Didaftarkan" />
+                <TableColumn fx:id="colDireview" minWidth="0.0" prefWidth="82.0" text="Direview" />
+                <TableColumn fx:id="colDipublikasikan" prefWidth="120.0" text="Dipublikasikan" />
+            </columns>
+        </TableView>
+        <GridPane hgap="10.0" layoutX="342.0" layoutY="31.0" prefHeight="296.0" prefWidth="452.0" vgap="10.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="212.0" minWidth="0.0" prefWidth="212.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.0" minWidth="0.0" prefWidth="274.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
             <children>
-                <Label text="ID Jurnal" textFill="WHITE">
+                <Label text="ID Artikel" textFill="WHITE">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="Judul Artikel" textFill="WHITE">
+                <Label text="ID Jurnal" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="Pengarang" textFill="WHITE">
+                <Label text="Nomor" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="Halaman Awal" textFill="WHITE">
+                <Label text="Judul Artikel" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
+                <Label text="Pengarang" textFill="WHITE" GridPane.rowIndex="4">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <Label text="Halaman Awal" textFill="WHITE" GridPane.rowIndex="5">
+                    <font>
+                        <Font name="Open Sans Regular" size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="tfIdArtikel" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="ID Artikel" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <TextField fx:id="tfIdJurnal" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="ID Jurnal" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <TextField fx:id="tfNomor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Nomor Artikel" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <TextField fx:id="tfJudul" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Judul Artikel (Keyword Pencarian)" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <TextField fx:id="tfPengarang" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Nama Pengarang" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <TextField fx:id="tfHalamanAwal" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Halaman Awal" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+            </children>
+        </GridPane>
+        <GridPane hgap="10.0" layoutX="831.0" layoutY="31.0" minHeight="200.0" minWidth="-Infinity" prefHeight="239.0" prefWidth="431.0" vgap="10.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="383.0" minWidth="10.0" prefWidth="173.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.0" minWidth="10.0" prefWidth="248.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="69.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
                 <Label text="Halaman Akhir" textFill="WHITE">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding></VBox>
-        <VBox layoutX="484.0" prefHeight="300.0" prefWidth="300.0" spacing="20.0">
-            <children>
-                <TextField fx:id="tfIdJurnal" />
-                <TextField fx:id="tfJudul" />
-                <TextField fx:id="tfPengarang" />
-                <TextField fx:id="tfHalamanAwal" />
-                <TextField fx:id="tfHalamanAkhir" />
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </VBox>
-        <VBox layoutX="784.0" prefHeight="224.0" prefWidth="184.0" spacing="30.0">
-            <children>
-                <Label text="Tanggal Didaftarkan" textFill="WHITE">
+                <Label text="Tanggal Didaftarkan" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="Tanggal Direview" textFill="WHITE">
+                <Label text="Tanggal Direview" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="Tanggal Dipublikasikan" textFill="WHITE">
+                <Label text="Tanggal Dipublikasikan" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <Label text="DOI" textFill="WHITE">
+                <Label text="DOI" textFill="WHITE" GridPane.rowIndex="4">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </VBox>
-        <VBox layoutX="968.0" prefHeight="223.0" prefWidth="312.0" spacing="20.0">
-            <children>
-                <DatePicker fx:id="tfDaftar" prefHeight="31.0" prefWidth="270.0" />
-            <DatePicker fx:id="tfReview" prefHeight="31.0" prefWidth="270.0" />
-            <DatePicker fx:id="tfPublikasi" prefHeight="31.0" prefWidth="270.0" />
-                <TextField fx:id="tfDoi">
+                <TextField fx:id="tfHalamanAkhir" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Halaman Akhir" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
+                <DatePicker fx:id="tfDaftar" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Tanggal Artikel Didaftarkan" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="tfReview" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Tanggal Artikel Direview" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <DatePicker fx:id="tfPublikasi" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="Tanggal Artikel Dipublikasikan" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <TextField fx:id="tfDoi" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="250.0" promptText="DOI Artikel" GridPane.columnIndex="1" GridPane.rowIndex="4">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </TextField>
             </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </VBox>
-        <HBox layoutX="776.0" layoutY="217.0" prefHeight="81.0" prefWidth="504.0">
+        </GridPane>
+        <GridPane hgap="15.0" layoutX="821.0" layoutY="297.0" prefHeight="30.0" prefWidth="516.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
             <children>
-                <Button fx:id="btnInsertArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Insert" textFill="WHITE">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <graphic>
-                    </graphic>
+                <Button fx:id="btnInsertArtikel" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #5AB0E3; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.--&gt;&lt;?import javafx.scene.control.*?&gt;&lt;Button mnemonicParsing=&quot;false&quot; text=&quot;Button&quot; /&gt;: ;" text="Insert" textFill="WHITE">
+                    <font>
+                        <Font name="Open Sans ExtraBold" size="15.0" />
+                    </font>
                 </Button>
-                <Button fx:id="btnUpdateArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Update" textFill="WHITE">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <graphic>
-                    </graphic>
+                <Button fx:id="btnUpdateArtikel" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #5AB0E3;" text="Update" textFill="WHITE" GridPane.columnIndex="1">
+                    <font>
+                        <Font name="Open Sans ExtraBold" size="15.0" />
+                    </font>
                 </Button>
-                <Button fx:id="btnDeleteArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Delete" textFill="WHITE">
-                    <HBox.margin>
-                        <Insets right="20.0" />
-                    </HBox.margin>
-                    <graphic>
-                    </graphic>
+                <Button fx:id="btnDeleteArtikel" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #5AB0E3;" text="Delete" textFill="WHITE" GridPane.columnIndex="2">
+                    <font>
+                        <Font name="Open Sans ExtraBold" size="15.0" />
+                    </font>
                 </Button>
-                <Button fx:id="btnSearchArtikel" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" style="-fx-background-color: #5AB0E3;" text="Search" textFill="WHITE">
-                    <graphic>
-                    </graphic>
+                <Button fx:id="btnClearArtikel" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #5AB0E3;" text="Clear" textFill="WHITE" GridPane.columnIndex="3">
+                    <font>
+                        <Font name="Open Sans ExtraBold" size="15.0" />
+                    </font>
                 </Button>
             </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-            </padding>
-        </HBox>
-        <TableView fx:id="tArtikel" layoutX="319.0" layoutY="298.0" prefHeight="419.0" prefWidth="932.0">
-            <columns>
-            <TableColumn fx:id="colIdArtikel" prefWidth="34.0" text="ID" />
-                <TableColumn fx:id="colIdJurnal" prefWidth="75.0" text="ID Jurnal" />
-            <TableColumn fx:id="colNomor" prefWidth="62.0" text="Nomor" />
-                <TableColumn fx:id="colJudulArtikel" prefWidth="168.0" text="Judul Artikel" />
-                <TableColumn fx:id="colPengarang" prefWidth="135.0" text="Pengarang" />
-                <TableColumn fx:id="colAwal" prefWidth="51.0" text="Awal" />
-            <TableColumn fx:id="colAkhir" prefWidth="53.0" text="Akhir" />
-                <TableColumn fx:id="colDoi" prefWidth="64.0" text="DOI" />
-                <TableColumn fx:id="colDidaftarkan" prefWidth="92.0" text="Didaftarkan" />
-                <TableColumn fx:id="colDireview" minWidth="0.0" prefWidth="82.0" text="Direview" />
-                <TableColumn fx:id="colDipublikasikan" prefWidth="115.0" text="Dipublikasikan" />
-            </columns>
-        </TableView>
+        </GridPane>
     </children>
 </AnchorPane>

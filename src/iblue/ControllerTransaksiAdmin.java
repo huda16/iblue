@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,9 @@ public class ControllerTransaksiAdmin implements Initializable {
 
     @FXML
     private Label lblErrors;
+
+    @FXML
+    private Label lblTgl;
 
     @FXML
     private TextField idPeminjam;
@@ -250,6 +254,7 @@ public class ControllerTransaksiAdmin implements Initializable {
         String query = "CALL add_transaction(" + inIdPeminjam + ",'" + inIdBuku + "')";
         executeQuery(query);
         showPeminjaman();
+        bersih();
     }
 
     private void setFieldValueFromTable() {
@@ -259,6 +264,7 @@ public class ControllerTransaksiAdmin implements Initializable {
             public void handle(MouseEvent mouseEvent) {
                 Peminjaman peminjaman = tPeminjaman.getItems().get(tPeminjaman.getSelectionModel().getSelectedIndex());
                 idTransaksi.setText(String.valueOf(peminjaman.getId()));
+                lblTgl.setText(String.valueOf(LocalDate.parse(String.valueOf(peminjaman.getTanggalKembali()))));
             }
         });
 
@@ -266,9 +272,13 @@ public class ControllerTransaksiAdmin implements Initializable {
 
     private void updateTransaksi() {
         String inIdTransaksi = idTransaksi.getText();
-        String query = "CALL update_transaction(" + inIdTransaksi + ")";
-        executeQuery(query);
+        String inTanggalKembali = lblTgl.getText();
+        if(inTanggalKembali.equals("")){
+            String query = "CALL update_transaction(" + inIdTransaksi + ")";
+            executeQuery(query);
+        }
         showPeminjaman();
+        bersih();
     }
 
     private void executeQuery(String query) {
@@ -285,5 +295,6 @@ public class ControllerTransaksiAdmin implements Initializable {
     private void bersih() {
         idPeminjam.setText("");
         idBuku.setText("");
+        lblTgl.setText("");
     }
 }

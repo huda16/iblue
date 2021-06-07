@@ -316,6 +316,7 @@ public class ControllerArtikelAdmin implements Initializable {
                     + "','" + inTanggalDipublikasikan + "');";
             executeQuery(query);
             showArtikel();
+            clearArtikel();
         }
     }
 
@@ -340,12 +341,13 @@ public class ControllerArtikelAdmin implements Initializable {
         boolean isAfterReview = dateDipublikasikan.isAfter(dateDireview);
         boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
         if(isAfterDaftar && isAfterReview && isHalamanAkhirAfter){
-            String query = "INSERT INTO artikel VALUES (0, '" + inIdJurnal + "','" + inJudul + "','" +
-                    inPengarang + "'," + inNomor + "," + inHalamanAwal + "," + inHalamanAkhir +
-                    ",'" + inDoi + "','" + inTanggalDidaftarkan + "','" + inTanggalDireview
-                    + "','" + inTanggalDipublikasikan + "');";
+            String query = "UPDATE artikel SET idJurnal='" + inIdJurnal + "', judul='" + inJudul + "', pengarang='" +
+                    inPengarang + "', nomor=" + inNomor + ", halamanAwal=" + inHalamanAwal + ", halamanAkhir=" + inHalamanAkhir +
+                    ", doi='" + inDoi + "', tanggalDidaftarkan='" + inTanggalDidaftarkan + "', tanggalDireview='" + inTanggalDireview
+                    + "', tanggalDipublikasikan='" + inTanggalDipublikasikan + "' WHERE id="+inIdArtikel+";";
             executeQuery(query);
             showArtikel();
+            clearArtikel();
         }
     }
 
@@ -353,6 +355,7 @@ public class ControllerArtikelAdmin implements Initializable {
         String query = "DELETE FROM artikel WHERE id = '" + tfIdArtikel.getText() + "';";
         executeQuery(query);
         showArtikel();
+        clearArtikel();
     }
 
     private void clearArtikel(){

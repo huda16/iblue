@@ -310,6 +310,7 @@ public class ControllerBukuAdmin implements Initializable {
         if(!(query.equals(""))){
             executeQuery(query);
             showBuku();
+            clearBuku();
         } else {
             JOptionPane.showMessageDialog(null, "Data Tidak Lengkap!");
         }
@@ -335,6 +336,7 @@ public class ControllerBukuAdmin implements Initializable {
                 + " WHERE kodeBuku = '" + inKodeBuku + "';";
         executeQuery(query);
         showBuku();
+        clearBuku();
     }
 
     private void deleteBuku(){
@@ -344,6 +346,7 @@ public class ControllerBukuAdmin implements Initializable {
         String query = "DELETE FROM buku WHERE kodeBuku = '" + inKodeBuku + "';";
         executeQuery(query);
         showBuku();
+        clearBuku();
     }
 
     private void clearBuku(){

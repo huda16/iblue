@@ -246,18 +246,21 @@ public class ControllerJurnalAdmin implements Initializable {
         String query = "INSERT INTO jurnal VALUES('" + inKode + "','" + inJudul + "','"  + inTahun + "'," + inVolume + ")";
         executeQuery(query);
         showJurnal();
+        clearJurnal();
     }
 
     private void updateJurnal(){
         String query = "UPDATE jurnal SET judul = '" + tfJudul.getText() + "', tahun = '" + tfTahun.getText() + "', volume = " + tfVolume.getText() + " WHERE kode = '" + tfKode.getText() + "';";
         executeQuery(query);
         showJurnal();
+        clearJurnal();
     }
 
     private void deleteJurnal(){
         String query = "DELETE FROM Jurnal WHERE kode = '" + tfKode.getText() + "';";
         executeQuery(query);
         showJurnal();
+        clearJurnal();
     }
 
     private void clearJurnal(){
