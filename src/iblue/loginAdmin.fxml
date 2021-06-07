@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -10,41 +11,50 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerLoginAdmin">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerLoginAdmin">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #5AB0E3;" BorderPane.alignment="CENTER">
          <children>
-            <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="129.0" layoutY="198.0" size="100px" />
-            <Text fill="WHITE" layoutX="77.0" layoutY="258.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan">
+            <FontAwesomeIcon fill="WHITE" glyphName="BOOK" layoutX="194.0" layoutY="278.0" size="100px" />
+            <Text fill="WHITE" layoutX="42.0" layoutY="397.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistem Perpustakaan">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Open Sans ExtraBold" size="36.0" />
                </font>
             </Text>
-            <Text fill="WHITE" layoutX="87.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampus UPI Cibiru">
+            <Text fill="WHITE" layoutX="111.0" layoutY="472.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kampus UPI di Cibiru">
                <font>
-                  <Font name="System Bold" size="20.0" />
+                  <Font name="Open Sans ExtraBold" size="24.0" />
                </font>
             </Text>
-         </children></AnchorPane>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" />
+         </padding></AnchorPane>
    </left>
    <center>
-      <AnchorPane prefHeight="500.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="768.0" prefWidth="808.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#5ab0e3" layoutX="135.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iblue">
+            <Text fill="#5ab0e3" layoutX="155.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="iBlue Administrator">
                <font>
-                  <Font name="Montserrat ExtraBold" size="30.0" />
+                  <Font name="Montserrat ExtraBold" size="64.0" />
                </font>
             </Text>
-            <TextField fx:id="txtUsername" layoutX="115.0" layoutY="171.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;" />
-            <PasswordField fx:id="txtPassword" layoutX="115.0" layoutY="241.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;" />
-            <Button fx:id="btnSubmit" layoutX="146.0" layoutY="294.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="28.0" prefWidth="58.0" style="-fx-background-color: #5AB0E3;" text="Login" textFill="WHITE">
+            <TextField fx:id="txtUsername" layoutX="345.0" layoutY="351.0" prefHeight="53.0" prefWidth="381.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Open Sans Regular" size="24.0" />
+               </font></TextField>
+            <PasswordField fx:id="txtPassword" layoutX="341.0" layoutY="459.0" prefHeight="53.0" prefWidth="393.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-width: 0 0 2px 0; -fx-border-color: #5AB0E3;">
+               <font>
+                  <Font name="Open Sans Regular" size="24.0" />
+               </font></PasswordField>
+            <Button fx:id="btnSubmit" layoutX="442.0" layoutY="561.0" mnemonicParsing="false" onMouseClicked="#handleButtonAction" prefHeight="51.0" prefWidth="133.0" style="-fx-background-color: #5AB0E3;" text="Login" textFill="WHITE">
+               <font>
+                  <Font name="Open Sans ExtraBold" size="24.0" />
                </font></Button>
-            <Button fx:id="btnClose" layoutX="314.0" layoutY="14.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="11.0" style="-fx-background-color: #5AB0E3;" text="x" textFill="WHITE" />
-            <Label fx:id="lblErrors" layoutX="100.0" layoutY="134.0" prefHeight="17.0" prefWidth="151.0" />
-            <FontAwesomeIcon fill="#5ab0e3" glyphName="USER" layoutX="88.0" layoutY="192.0" size="20px" />
-            <FontAwesomeIcon fill="#5ab0e3" glyphName="KEY" layoutX="86.0" layoutY="263.0" size="20px" />
+            <Button fx:id="btnClose" layoutX="827.0" layoutY="14.0" mnemonicParsing="false" prefHeight="11.0" prefWidth="11.0" style="-fx-background-color: #5AB0E3;" text="x" textFill="WHITE" />
+            <Label fx:id="lblErrors" layoutX="416.0" layoutY="130.0" prefHeight="17.0" prefWidth="151.0" />
+            <FontAwesomeIcon fill="#5ab0e3" glyphName="USER" layoutX="282.0" layoutY="390.0" size="36" />
+            <FontAwesomeIcon fill="#5ab0e3" glyphName="KEY" layoutX="278.0" layoutY="498.0" size="36" />
          </children>
       </AnchorPane>
    </center>

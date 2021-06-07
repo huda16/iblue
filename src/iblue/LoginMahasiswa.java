@@ -10,18 +10,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class LoginMahasiswa extends Application {
-    //define your offsets here
     private double xOffset = 0;
     private double yOffset = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("loginMahasiswa.fxml"));
-//we gonna remove the borderless thingie.
         stage.initStyle(StageStyle.DECORATED);
         stage.setMaximized(false);
 
-        //grab your root here
         root.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -30,8 +27,6 @@ public class LoginMahasiswa extends Application {
             }
         });
 
-        //sorry about that - Windows defender issue.
-        //move around here
         root.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -46,9 +41,6 @@ public class LoginMahasiswa extends Application {
         stage.show();
     }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         launch(args);
     }

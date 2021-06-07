@@ -2,6 +2,7 @@ package iblue;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -67,7 +68,7 @@ public class ControllerBukuAdmin implements Initializable {
     private Button btnClearBuku;
 
     @FXML
-    private Button btnProfil;
+    private Button btnLogout;
 
     @FXML
     private Button btnDaftarMahasiswa;
@@ -128,10 +129,8 @@ public class ControllerBukuAdmin implements Initializable {
             clearBuku();
         } else if (actionEvent.getSource() == btnDaftarMahasiswa) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml")));
                 stage.setScene(scene);
@@ -142,10 +141,8 @@ public class ControllerBukuAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarPeminjaman) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
                 stage.setScene(scene);
@@ -156,10 +153,8 @@ public class ControllerBukuAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarJurnal) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml")));
                 stage.setScene(scene);
@@ -170,10 +165,8 @@ public class ControllerBukuAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarArtikel) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml")));
                 stage.setScene(scene);
@@ -184,12 +177,22 @@ public class ControllerBukuAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarBuku) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnLogout) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginAdmin.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -259,6 +262,19 @@ public class ControllerBukuAdmin implements Initializable {
         colStok.setCellValueFactory(new PropertyValueFactory<>("stok"));
 
         tBuku.setItems(list);
+
+        FilteredList<Buku> filteredBuku = new FilteredList(getDaftarBuku(), b -> true);
+
+        tfJudul.textProperty().addListener((observable) -> {
+            String keyword = tfJudul.getText();
+
+            if(keyword == null || keyword.length() == 0){
+                filteredBuku.setPredicate(b -> true);
+            } else {
+                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword));
+            }
+            tBuku.setItems(filteredBuku);
+        });
     }
 
     private void insertBuku(){

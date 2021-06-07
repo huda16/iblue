@@ -17,8 +17,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #273C4F #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerJurnalAdmin">
-    <VBox layoutY="-2.0" prefHeight="1065.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #273C4F #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerJurnalAdmin">
+    <VBox layoutY="-2.0" prefHeight="768.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
         <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
                 <children>
@@ -34,13 +34,6 @@
                     </Text>
                 </children>
             </Pane>
-            <Button fx:id="btnProfil" graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
-                <graphic>
-                </graphic>
-                <font>
-                    <Font name="Open Sans Regular" size="18.0" />
-                </font>
-            </Button>
             <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
                 <graphic>
                 </graphic>
@@ -55,14 +48,14 @@
                     <Font name="Open Sans Regular" size="18.0" />
                 </font>
             </Button>
-            <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
+            <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                 <graphic>
                 </graphic>
                 <font>
                     <Font name="Open Sans Regular" size="18.0" />
                 </font>
             </Button>
-            <Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
+            <Button fx:id="btnDaftarJurnal" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Jurnal" textFill="WHITE">
                 <graphic>
                 </graphic>
                 <font>
@@ -79,9 +72,14 @@
                     <Insets />
                 </opaqueInsets>
             </Button>
+         <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Logout" textFill="WHITE">
+            <font>
+               <Font name="Open Sans Regular" size="18.0" />
+            </font>
+         </Button>
         </children>
     </VBox>
-    <BorderPane layoutX="300.0" prefHeight="1078.0" prefWidth="1000.0">
+    <BorderPane layoutX="300.0" prefHeight="788.0" prefWidth="1000.0">
         <top>
             <BorderPane BorderPane.alignment="CENTER">
                 <bottom>
@@ -143,33 +141,39 @@
                         <children>
                             <Label text="Kode" textFill="WHITE">
                                 <font>
-                                    <Font size="16.0" />
+                                    <Font name="Open Sans Regular" size="16.0" />
                                 </font>
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
                             </Label>
-                            <TextField fx:id="tfKode" GridPane.columnIndex="1">
+                            <TextField fx:id="tfKode" promptText="Kode Jurnal" GridPane.columnIndex="1">
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
+                        <font>
+                           <Font name="Open Sans Regular" size="15.0" />
+                        </font>
                             </TextField>
                             <Label layoutX="18.0" layoutY="14.0" text="Judul" textFill="WHITE" GridPane.rowIndex="1">
                                 <font>
-                                    <Font size="16.0" />
+                                    <Font name="Open Sans Regular" size="16.0" />
                                 </font>
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
                             </Label>
-                            <TextField fx:id="tfJudul" layoutX="251.0" layoutY="14.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <TextField fx:id="tfJudul" layoutX="251.0" layoutY="14.0" promptText="Judul Jurnal (Keyword Pencarian)" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
+                        <font>
+                           <Font name="Open Sans Regular" size="15.0" />
+                        </font>
                             </TextField>
                             <Label layoutX="18.0" layoutY="64.0" text="Tahun" textFill="WHITE" GridPane.rowIndex="2">
                                 <font>
-                                    <Font size="16.0" />
+                                    <Font name="Open Sans Regular" size="16.0" />
                                 </font>
                                 <GridPane.margin>
                                     <Insets />
@@ -177,25 +181,31 @@
                             </Label>
                             <Label layoutX="18.0" layoutY="112.0" text="Volume" textFill="WHITE" GridPane.rowIndex="3">
                                 <font>
-                                    <Font size="16.0" />
+                                    <Font name="Open Sans Regular" size="16.0" />
                                 </font>
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
                             </Label>
-                            <TextField fx:id="tfVolume" layoutX="190.0" layoutY="112.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                            <TextField fx:id="tfVolume" layoutX="190.0" layoutY="112.0" promptText="Volume ke-" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                 <GridPane.margin>
                                     <Insets />
                                 </GridPane.margin>
+                        <font>
+                           <Font name="Open Sans Regular" size="15.0" />
+                        </font>
                             </TextField>
-                            <TextField fx:id="tfTahun" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                            <TextField fx:id="tfTahun" promptText="Tahun Publikasi" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <font>
+                           <Font name="Open Sans Regular" size="15.0" />
+                        </font></TextField>
                         </children>
                     </GridPane>
                 </top>
             </BorderPane>
         </top>
         <center>
-            <TableView fx:id="tJurnal" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tJurnal" prefHeight="485.0" prefWidth="920.0" BorderPane.alignment="CENTER">
                 <columns>
                     <TableColumn fx:id="colKode" prefWidth="75.0" text="Kode" />
                     <TableColumn fx:id="colJudul" prefWidth="75.0" text="Judul" />

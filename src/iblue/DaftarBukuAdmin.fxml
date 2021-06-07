@@ -10,16 +10,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerBukuAdmin">
     <children>
-        <VBox layoutY="-2.0" prefHeight="1065.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
+        <VBox layoutY="-2.0" prefHeight="768.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
             <children>
                 <Pane prefHeight="200.0" prefWidth="200.0">
                     <children>
@@ -35,13 +34,6 @@
                         </Text>
                     </children>
                 </Pane>
-                <Button fx:id="btnProfil" graphicTextGap="20.0" layoutX="10.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Profil" textFill="WHITE">
-                    <graphic>
-                    </graphic>
-                    <font>
-                        <Font name="Open Sans Regular" size="18.0" />
-                    </font>
-                </Button>
                 <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
                     <graphic>
                     </graphic>
@@ -80,30 +72,30 @@
                         <Insets />
                     </opaqueInsets>
                 </Button>
+            <Button fx:id="btnLogout" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Logout" textFill="WHITE">
+               <font>
+                  <Font name="Open Sans Regular" size="18.0" />
+               </font>
+            </Button>
             </children>
         </VBox>
-        <HBox layoutX="776.0" layoutY="217.0" prefHeight="81.0" prefWidth="504.0">
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-            </padding>
-        </HBox>
-        <TableView fx:id="tBuku" layoutX="319.0" layoutY="308.0" prefHeight="736.0" prefWidth="1555.0">
+        <TableView fx:id="tBuku" layoutX="319.0" layoutY="308.0" prefHeight="445.0" prefWidth="1017.0">
             <columns>
-                <TableColumn fx:id="colKode" prefWidth="100.0" text="Kode" />
-                <TableColumn fx:id="colJudul" prefWidth="400.0" text="Judul" />
-                <TableColumn fx:id="colPengarang" prefWidth="300.0" text="Nama Pengarang" />
-                <TableColumn fx:id="colPenerbit" prefWidth="200.0" text="Penerbit" />
-                <TableColumn fx:id="colKota" prefWidth="150.0" text="Kota" />
-                <TableColumn fx:id="colEdisi" prefWidth="42.0" text="Edisi" />
-                <TableColumn fx:id="colPublikasi" prefWidth="150.0" text="Publikasi" />
-                <TableColumn fx:id="colIsbn" prefWidth="150.0" text="ISBN" />
-                <TableColumn fx:id="colStok" prefWidth="77.0" text="Stok" />
+                <TableColumn fx:id="colKode" prefWidth="65.99993896484375" text="Kode" />
+                <TableColumn fx:id="colJudul" prefWidth="228.0" text="Judul" />
+                <TableColumn fx:id="colPengarang" prefWidth="136.0" text="Nama Pengarang" />
+                <TableColumn fx:id="colPenerbit" prefWidth="121.0" text="Penerbit" />
+                <TableColumn fx:id="colKota" prefWidth="83.0" text="Kota" />
+                <TableColumn fx:id="colEdisi" prefWidth="57.0" text="Edisi" />
+                <TableColumn fx:id="colPublikasi" prefWidth="89.0" text="Publikasi" />
+                <TableColumn fx:id="colIsbn" prefWidth="187.0" text="ISBN" />
+                <TableColumn fx:id="colStok" prefWidth="57.0" text="Stok" />
             </columns>
         </TableView>
-        <GridPane hgap="10.0" layoutX="319.0" layoutY="37.0" prefHeight="231.0" prefWidth="834.0" vgap="10.0">
+        <GridPane hgap="10.0" layoutX="330.0" layoutY="37.0" prefHeight="231.0" prefWidth="486.0" vgap="10.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="385.0" minWidth="10.0" prefWidth="385.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.0" minWidth="10.0" prefWidth="353.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="492.0" minWidth="10.0" prefWidth="247.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="632.0" minWidth="10.0" prefWidth="279.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
@@ -118,37 +110,52 @@
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfKode" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" />
+                <TextField fx:id="tfKode" prefHeight="35.0" prefWidth="250.0" promptText="Kode Buku" GridPane.columnIndex="1" GridPane.hgrow="NEVER">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
                 <Label text="Judul" textFill="WHITE" GridPane.rowIndex="1">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfJudul" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1" />
+                <TextField fx:id="tfJudul" prefWidth="270.0" promptText="Judul Buku (Keyword Pencarian)" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
                 <Label text="Nama Pengarang" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfNamaPengarang" prefHeight="31.0" prefWidth="291.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2" />
+                <TextField fx:id="tfNamaPengarang" prefHeight="31.0" prefWidth="291.0" promptText="Nama Pengarang" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
                 <Label text="Penerbit" textFill="WHITE" GridPane.rowIndex="3">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfPenerbit" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="3" />
+                <TextField fx:id="tfPenerbit" promptText="Nama Penerbit" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
                 <Label text="Kota" textFill="WHITE" GridPane.rowIndex="4">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfKota" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4" />
+                <TextField fx:id="tfKota" prefHeight="35.0" prefWidth="400.0" promptText="Kota Publikasi" GridPane.columnIndex="1" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Open Sans Regular" size="15.0" />
+               </font></TextField>
             </children>
         </GridPane>
-        <GridPane hgap="10.0" layoutX="1249.0" layoutY="37.0" prefHeight="190.0" prefWidth="639.0" vgap="10.0">
+        <GridPane hgap="10.0" layoutX="878.0" layoutY="37.0" prefHeight="190.0" prefWidth="442.0" vgap="10.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="229.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="962.0" minWidth="10.0" prefWidth="400.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="544.0" minWidth="10.0" prefWidth="183.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="962.0" minWidth="10.0" prefWidth="249.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -162,7 +169,7 @@
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfEdisi" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES">
+                <TextField fx:id="tfEdisi" prefHeight="35.0" prefWidth="250.0" promptText="Edisi ke-" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
@@ -172,13 +179,13 @@
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <DatePicker fx:id="tfPublikasi" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="tfPublikasi" prefHeight="35.0" prefWidth="250.0" promptText="Tanggal Publikasi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label text="ISBN" textFill="WHITE" GridPane.rowIndex="2">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfIsbn" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <TextField fx:id="tfIsbn" prefHeight="35.0" prefWidth="250.0" promptText="ISBN" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
@@ -188,19 +195,19 @@
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </Label>
-                <TextField fx:id="tfStok" prefHeight="35.0" prefWidth="400.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <TextField fx:id="tfStok" prefHeight="35.0" prefWidth="250.0" promptText="Stok" GridPane.columnIndex="1" GridPane.rowIndex="3">
                     <font>
                         <Font name="Open Sans Regular" size="15.0" />
                     </font>
                 </TextField>
             </children>
         </GridPane>
-        <GridPane hgap="45.0" layoutX="1363.0" layoutY="253.0" prefHeight="30.0" prefWidth="525.0">
+        <GridPane hgap="15.0" layoutX="873.0" layoutY="241.0" prefHeight="30.0" prefWidth="449.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="35.0" />

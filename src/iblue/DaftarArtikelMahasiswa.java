@@ -6,11 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class DaftarMahasiswa extends Application {
+public class DaftarArtikelMahasiswa extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("DaftarArtikelMahasiswa.fxml"));
 
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();

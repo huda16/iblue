@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -21,15 +18,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-public class ControllerDaftarMahasiswa implements Initializable {
+public class ControllerBukuMahasiswa implements Initializable {
 
     @FXML
-    private Button btnDaftarMahasiswa;
+    private TextField tfKeyword;
 
     @FXML
-    private Button btnDaftarPeminjaman;
+    private Button btnLogout;
 
     @FXML
     private Button btnDaftarBuku;
@@ -41,31 +39,34 @@ public class ControllerDaftarMahasiswa implements Initializable {
     private Button btnDaftarArtikel;
 
     @FXML
-    private Button btnLogout;
+    private TableView<Buku> tBuku;
 
     @FXML
-    private TableView<Mahasiswa> tMahasiswa;
+    private TableColumn<Buku, String> colKode;
 
     @FXML
-    private TableColumn<Mahasiswa, Integer> colNim;
+    private TableColumn<Buku, String> colJudul;
 
     @FXML
-    private TableColumn<Mahasiswa, String> colNama;
+    private TableColumn<Buku, String> colPengarang;
 
     @FXML
-    private TableColumn<Mahasiswa, String> colEmail;
+    private TableColumn<Buku, String> colPenerbit;
 
     @FXML
-    private TableColumn<Mahasiswa, String> colProdi;
+    private TableColumn<Buku, String> colKota;
 
     @FXML
-    private TableColumn<Mahasiswa, String> colTelepon;
+    private TableColumn<Buku, Integer> colEdisi;
 
     @FXML
-    private TableColumn<Mahasiswa, String> colAlamat;
+    private TableColumn<Buku, Date> colPublikasi;
 
     @FXML
-    private TextField tfKeyword;
+    private TableColumn<Buku, Integer> colIsbn;
+
+    @FXML
+    private TableColumn<Buku, Integer> colStok;
 
     String query = "";
 
@@ -77,9 +78,10 @@ public class ControllerDaftarMahasiswa implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
+
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -88,9 +90,10 @@ public class ControllerDaftarMahasiswa implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
+
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -99,20 +102,7 @@ public class ControllerDaftarMahasiswa implements Initializable {
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }else if (actionEvent.getSource() == btnDaftarPeminjaman) {
-            try {
-
-                Node node = (Node) actionEvent.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -121,15 +111,12 @@ public class ControllerDaftarMahasiswa implements Initializable {
             }
         } else if (actionEvent.getSource() == btnLogout) {
             try {
-
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-
                 stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginAdmin.fxml")));
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
-
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
@@ -139,7 +126,7 @@ public class ControllerDaftarMahasiswa implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showMahasiswa();
+        showBuku();
     }
 
     public Connection getConnection() {
@@ -153,61 +140,62 @@ public class ControllerDaftarMahasiswa implements Initializable {
         }
     }
 
-    public ObservableList<Mahasiswa> getDaftarMahasiswa() {
-        ObservableList<Mahasiswa> daftarMahasiswa = FXCollections.observableArrayList();
+    public ObservableList<Buku> getDaftarBuku() {
+        ObservableList<Buku> daftarBuku = FXCollections.observableArrayList();
         Statement statement;
         ResultSet resultSet;
 
         try {
             Connection conn = getConnection();
-            String query = "SELECT * FROM mahasiswa";
+            String query = "SELECT * FROM buku";
             statement = conn.createStatement();
             resultSet = statement.executeQuery(query);
-            Mahasiswa mahasiswa;
+            Buku buku;
             while (resultSet.next()) {
-                mahasiswa = new Mahasiswa(resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("prodi"),
-                        resultSet.getString("telepon"),
-                        resultSet.getString("alamat"),
-                        resultSet.getInt("aktif"));
-                daftarMahasiswa.add(mahasiswa);
+                buku = new Buku(resultSet.getString("kodeBuku"),
+                        resultSet.getString("judulBuku"),
+                        resultSet.getString("pengarang"),
+                        resultSet.getString("penerbit"),
+                        resultSet.getString("kota"),
+                        resultSet.getInt("edisi"),
+                        resultSet.getDate("tanggalPublikasi"),
+                        resultSet.getInt("isbn"),
+                        resultSet.getInt("stok"));
+                daftarBuku.add(buku);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return daftarMahasiswa;
+        return daftarBuku;
     }
 
-    public void showMahasiswa(){
+    public void showBuku(){
+        ObservableList<Buku> list = getDaftarBuku();
+        colKode.setCellValueFactory(new PropertyValueFactory<>("kodeBuku"));
+        colJudul.setCellValueFactory(new PropertyValueFactory<>("judulBuku"));
+        colPengarang.setCellValueFactory(new PropertyValueFactory<>("pengarang"));
+        colPenerbit.setCellValueFactory(new PropertyValueFactory<>("penerbit"));
+        colKota.setCellValueFactory(new PropertyValueFactory<>("kota"));
+        colEdisi.setCellValueFactory(new PropertyValueFactory<>("edisi"));
+        colPublikasi.setCellValueFactory(new PropertyValueFactory<>("tanggalPublikasi"));
+        colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        colStok.setCellValueFactory(new PropertyValueFactory<>("stok"));
 
-        ObservableList<Mahasiswa> list = getDaftarMahasiswa();
-        colNim.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colNama.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-        colProdi.setCellValueFactory(new PropertyValueFactory<>("prodi"));
-        colTelepon.setCellValueFactory(new PropertyValueFactory<>("telepon"));
-        colAlamat.setCellValueFactory(new PropertyValueFactory<>("alamat"));
-        tMahasiswa.setItems(list);
+        tBuku.setItems(list);
 
-        tMahasiswa.setItems(list);
-
-        FilteredList<Mahasiswa> filteredMahasiswa = new FilteredList(getDaftarMahasiswa(), b -> true);
+        FilteredList<Buku> filteredBuku = new FilteredList(getDaftarBuku(), b -> true);
 
         tfKeyword.textProperty().addListener((observable) -> {
             String keyword = tfKeyword.getText();
 
             if(keyword == null || keyword.length() == 0){
-                filteredMahasiswa.setPredicate(b -> true);
+                filteredBuku.setPredicate(b -> true);
             } else {
-                filteredMahasiswa.setPredicate(b -> String.valueOf(b.getId()).toLowerCase().contains(keyword));
+                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword));
             }
-            tMahasiswa.setItems(filteredMahasiswa);
+            tBuku.setItems(filteredBuku);
         });
     }
-
 
 
 }

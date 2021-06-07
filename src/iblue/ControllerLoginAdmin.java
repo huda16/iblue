@@ -42,16 +42,13 @@ public class ControllerLoginAdmin implements Initializable {
     public void handleButtonAction(MouseEvent event) {
 
         if (event.getSource() == btnSubmit) {
-            //login here
             if (logIn().equals("Success")) {
                 try {
 
-                    //add you loading or delays - ;-)
                     Node node = (Node) event.getSource();
                     Stage stage = (Stage) node.getScene().getWindow();
-                    //stage.setMaximized(true);
                     stage.close();
-                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
+                    Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml")));
                     stage.setScene(scene);
                     stage.show();
 

@@ -1,9 +1,8 @@
 package iblue;
 
-import com.mysql.cj.xdevapi.Table;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +45,7 @@ public class ControllerTransaksiAdmin implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private Button btnProfil;
+    private Button btnLogout;
 
     @FXML
     private Button btnDaftarMahasiswa;
@@ -96,10 +95,8 @@ public class ControllerTransaksiAdmin implements Initializable {
             bersih();
         } else if (actionEvent.getSource() == btnDaftarMahasiswa) {
             try {
-                // add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarMahasiswa.fxml")));
                 stage.setScene(scene);
@@ -164,6 +161,18 @@ public class ControllerTransaksiAdmin implements Initializable {
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
+        } else if (actionEvent.getSource() == btnLogout) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
     }
 
@@ -219,6 +228,20 @@ public class ControllerTransaksiAdmin implements Initializable {
         colBatasTanggal.setCellValueFactory(new PropertyValueFactory<>("batasTanggal"));
         colTglKembali.setCellValueFactory(new PropertyValueFactory<>("tanggalKembali"));
         tPeminjaman.setItems(list);
+
+        FilteredList<Peminjaman> filteredJurnal = new FilteredList(getDaftarPeminjaman(), b -> true);
+
+        idPeminjam.textProperty().addListener((observable) -> {
+            String keyword = idPeminjam.getText();
+
+            if(keyword == null || keyword.length() == 0){
+                filteredJurnal.setPredicate(b -> true);
+            } else {
+                filteredJurnal.setPredicate(b -> String.valueOf(b.getIdPeminjam()).toLowerCase().contains(keyword));
+            }
+            tPeminjaman.setItems(filteredJurnal);
+        });
+
     }
 
     private void pinjamBuku() {
@@ -257,23 +280,6 @@ public class ControllerTransaksiAdmin implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-    }
-
-    private void executeQuerySelect(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try {
-            st = conn.createStatement();
-            st.executeQuery(query);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    private void setLblError(Color color, String text) {
-        lblErrors.setTextFill(color);
-        lblErrors.setText(text);
-        System.out.println(text);
     }
 
     private void bersih() {
