@@ -316,9 +316,9 @@ public class ControllerBukuAdmin implements Initializable {
                     "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
-        else if (isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
-            JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
-            throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
+        else if (isNotNumberOnly(inEdisi) || isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
+            JOptionPane.showMessageDialog(null, "Kolom Edisi, ISBN, dan Stok hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom Edisi, ISBN, atau stok berisi nilai bukan angka!");
         }
 
         String query = "INSERT INTO buku"
@@ -393,9 +393,9 @@ public class ControllerBukuAdmin implements Initializable {
                     "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
-        else if (isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
-            JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
-            throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
+        else if (isNotNumberOnly(inEdisi) || isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
+            JOptionPane.showMessageDialog(null, "Kolom Edisi, ISBN, dan Stok hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom Edisi, ISBN, atau stok berisi nilai bukan angka!");
         }
 
         String query = "UPDATE buku SET judulBuku = ?, pengarang = ?, penerbit = ?, kota = ?, edisi = ?," +
