@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -135,7 +134,11 @@ public class ControllerBukuAdmin implements Initializable {
                 System.err.println(exception.getMessage());
             }
         } else if (actionEvent.getSource() == btnUpdateBuku){
-            updateBuku();
+            try {
+                updateBuku();
+            } catch (Exception exception) {
+                System.err.println(exception.getMessage());
+            }
         } else if (actionEvent.getSource() == btnDeleteBuku){
             try {
                 deleteBuku();
@@ -354,6 +357,8 @@ public class ControllerBukuAdmin implements Initializable {
             /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil ditambahkan");
+                showBuku();
+                clearBuku();
             }
 
         } catch (SQLException sqlException) {
@@ -365,14 +370,11 @@ public class ControllerBukuAdmin implements Initializable {
             } else {
                 JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menambahkan data buku!");
             }
-            System.err.println(errorCode + ": " + sqlException.getMessage());
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
         }
-
-        showBuku();
-        clearBuku();
     }
 
-    private void updateBuku(){
+    private void updateBuku() {
 
         String inKodeBuku = tfKode.getText();
         String inJudul = tfJudul.getText();
@@ -380,18 +382,70 @@ public class ControllerBukuAdmin implements Initializable {
         String inPenerbit = tfPenerbit.getText();
         String inKota = tfKota.getText();
         String inEdisi = tfEdisi.getText();
-        String inPublikasi = tfPublikasi.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate inPublikasi = tfPublikasi.getValue();
         String inIsbn = tfIsbn.getText();
         String inStok = tfStok.getText();
 
-        String query = "UPDATE buku SET judulBuku = '" + inJudul + "', pengarang = '" +
-                inPengarang + "', penerbit = '" + inPenerbit + "', kota = '" + inKota
-                + "', edisi = " + inEdisi + ", tanggalPublikasi = '" + inPublikasi
-                + "', isbn = " + inIsbn + ", stok = " + inStok
-                + " WHERE kodeBuku = '" + inKodeBuku + "';";
-        executeQuery(query);
-        showBuku();
-        clearBuku();
+        /* field validation */
+        if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
+                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty()
+        ) {
+            JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Pengarang, Penerbit, " +
+                    "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
+            throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
+        }
+        else if (!isInteger(inIsbn) || !isInteger(inStok)) {
+            JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
+        }
+
+        String query = "UPDATE buku SET judulBuku = ?, pengarang = ?, penerbit = ?, kota = ?, edisi = ?," +
+                "tanggalPublikasi = ?, isbn = ?, stok = ? WHERE kodeBuku = ?";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inJudul);
+            stmt.setString(2, inPengarang);
+            stmt.setString(3, inPenerbit);
+            stmt.setString(4, inKota);
+            stmt.setDate(6, java.sql.Date.valueOf(Objects.requireNonNull(inPublikasi)));
+            stmt.setInt(8, Integer.parseInt(inStok));
+            stmt.setString(9, inKodeBuku);
+
+            /* non-required field */
+            if (!inEdisi.isEmpty()) {
+                stmt.setInt(5, Integer.parseInt(inEdisi));
+            } else {
+                stmt.setNull(5, Types.INTEGER);
+            }
+
+            if (!inIsbn.isEmpty()) {
+                stmt.setInt(7, Integer.parseInt(inIsbn));
+            } else {
+                stmt.setNull(7, Types.INTEGER);
+            }
+
+            /* execute query and getting how many rows affected after query execution */
+            int rowsAffected = stmt.executeUpdate();
+
+            /* showing success response */
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil diperbarui");
+                showBuku();
+                clearBuku();
+            } else {
+                /* if value of kodeBuku not found */
+                JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal diperbarui!");
+            }
+
+        } catch (SQLException sqlException) {
+            int errorCode = sqlException.getErrorCode();
+
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat memperbarui data buku!");
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
+        }
     }
 
     private void deleteBuku() {
@@ -412,24 +466,30 @@ public class ControllerBukuAdmin implements Initializable {
             /* required field */
             stmt.setString(1, inKodeBuku);
 
-            /* execute query and getting how many rows affected after query execution */
-            int rowsAffected = stmt.executeUpdate();
+            /* confirm delete action */
+            int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data buku ini?");
 
-            /* showing alert response */
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil dihapus");
-            } else {
-                /* if value of kodeBuku not found */
-                JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal dihapus!");
+            if (confirmDelete == 0) {
+                /* execute query and getting how many rows affected after query execution */
+                int rowsAffected = stmt.executeUpdate();
+
+                /* showing alert response */
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil dihapus");
+                    showBuku();
+                    clearBuku();
+                } else {
+                    /* if value of kodeBuku not found */
+                    JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal dihapus!");
+                }
             }
 
         } catch (SQLException sqlException) {
-            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menghapus data buku!");
-            System.err.println(sqlException.getMessage());
-        }
+            int errorCode = sqlException.getErrorCode();
 
-        showBuku();
-        clearBuku();
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menghapus data buku!");
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
+        }
     }
 
     private void clearBuku(){
@@ -442,17 +502,6 @@ public class ControllerBukuAdmin implements Initializable {
         tfPublikasi.setValue(null);
         tfIsbn.setText("");
         tfStok.setText("");
-    }
-
-    private void executeQuery(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeUpdate(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
 
     private void setFieldValueFromTable(){
