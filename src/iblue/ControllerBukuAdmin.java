@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ControllerBukuAdmin implements Initializable {
 
@@ -110,19 +112,16 @@ public class ControllerBukuAdmin implements Initializable {
     @FXML
     private TableColumn<Buku, Integer> colStok;
 
-    public static boolean isInteger(String s, int radix) {
-        for (int i = 0; i < s.length(); i++) {
-            if (i == 0 && s.charAt(i) == '-') {
-                if (s.length() == 1) return false;
-                else continue;
-            }
-            if (Character.digit(s.charAt(i), radix) < 0) return false;
-        }
-        return true;
+
+    public static boolean isNumberOnly(String s) {
+        Pattern pattern = Pattern.compile("^\\d*$");
+        Matcher matcher = pattern.matcher(s);
+        
+        return matcher.find();
     }
 
-    public static boolean isInteger(String s) {
-        return isInteger(s, 10);
+    public static boolean isNotNumberOnly(String s) {
+        return !isNumberOnly(s);
     }
 
     public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
@@ -317,7 +316,7 @@ public class ControllerBukuAdmin implements Initializable {
                     "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
-        else if (!isInteger(inIsbn) || !isInteger(inStok)) {
+        else if (isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
             JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
             throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
         }
@@ -394,7 +393,7 @@ public class ControllerBukuAdmin implements Initializable {
                     "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
-        else if (!isInteger(inIsbn) || !isInteger(inStok)) {
+        else if (isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
             JOptionPane.showMessageDialog(null, "ISBN dan Stok hanya boleh diisi dengan angka!");
             throw new NumberFormatException("Kolom ISBN atau kolom stok berisi nilai bukan angka!");
         }
