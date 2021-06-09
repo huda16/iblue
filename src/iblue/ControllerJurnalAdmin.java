@@ -267,7 +267,7 @@ public class ControllerJurnalAdmin implements Initializable {
         String inVolume = tfVolume.getText();
         String inKodeRak = tfKodeRak.getText();
 
-        /* field validation */
+
         if (inKode.isEmpty() || inJudul.isEmpty() || inTahun.isEmpty() || inVolume.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Tahun, Volume, dan Kode Rak wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
@@ -282,17 +282,14 @@ public class ControllerJurnalAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKode);
             stmt.setString(2, inJudul);
             stmt.setInt(3, Integer.parseInt(inTahun));
             stmt.setInt(4, Integer.parseInt(inVolume));
             stmt.setString(5, inKodeRak);
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " jurnal berhasil ditambahkan");
                 showJurnal();
@@ -321,7 +318,6 @@ public class ControllerJurnalAdmin implements Initializable {
         String inVolume = tfVolume.getText();
         String inKodeRak = tfKodeRak.getText();
 
-        /* field validation */
         if (inKode.isEmpty() || inJudul.isEmpty() || inTahun.isEmpty() || inVolume.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Tahun, Volume, dan Kode Rak wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
@@ -336,7 +332,6 @@ public class ControllerJurnalAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inJudul);
             stmt.setInt(2, Integer.parseInt(inTahun));
             stmt.setInt(3, Integer.parseInt(inVolume));
@@ -344,16 +339,13 @@ public class ControllerJurnalAdmin implements Initializable {
             stmt.setString(5, inKode);
 
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " jurnal berhasil diperbarui");
                 showJurnal();
                 clearJurnal();
             } else {
-                /* if value of kodeBuku not found */
                 JOptionPane.showMessageDialog(null, "Kode jurnal '" + inKode + "' tidak ditemukan! Data jurnal gagal diperbarui!");
             }
 
@@ -370,7 +362,6 @@ public class ControllerJurnalAdmin implements Initializable {
 
         String inKode = tfKode.getText();
 
-        /* field validation */
         if (inKode.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom kode harus terisi! Silahkan klik data jurnal yang akan dihapus terlebih dahulu.");
             throw new NullPointerException("Kolom kode masih kosong!");
@@ -381,23 +372,19 @@ public class ControllerJurnalAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKode);
 
-            /* confirm delete action */
             int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data jurnal ini?");
 
             if (confirmDelete == 0) {
-                /* execute query and getting how many rows affected after query execution */
+
                 int rowsAffected = stmt.executeUpdate();
 
-                /* showing alert response */
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(null, rowsAffected + " jurnal berhasil dihapus");
                     showJurnal();
                     clearJurnal();
                 } else {
-                    /* if value of kodeBuku not found */
                     JOptionPane.showMessageDialog(null, "Kode jurnal '" + inKode + "' tidak ditemukan! Data jurnal gagal dihapus!");
                 }
             }
@@ -415,17 +402,6 @@ public class ControllerJurnalAdmin implements Initializable {
         tfJudul.setText("");
         tfTahun.setText("");
         tfVolume.setText("");
-    }
-
-    private void executeQuery(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeUpdate(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
 
     private void setFieldValueFromTable(){

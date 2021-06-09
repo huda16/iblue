@@ -114,10 +114,8 @@ public class ControllerTransaksiAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarPeminjaman) {
             try {
-                // add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
                 stage.setScene(scene);
@@ -140,10 +138,8 @@ public class ControllerTransaksiAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarJurnal) {
             try {
-                // add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalAdmin.fxml")));
                 stage.setScene(scene);
@@ -154,10 +150,8 @@ public class ControllerTransaksiAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarArtikel) {
             try {
-                // add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelAdmin.fxml")));
                 stage.setScene(scene);
@@ -168,10 +162,8 @@ public class ControllerTransaksiAdmin implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarBuku) {
             try {
-                // add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuAdmin.fxml")));
                 stage.setScene(scene);

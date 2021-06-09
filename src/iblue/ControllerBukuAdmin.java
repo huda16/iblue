@@ -331,7 +331,7 @@ public class ControllerBukuAdmin implements Initializable {
         String inStok = tfStok.getText();
         String inKodeRak = tfKodeRak.getText();
 
-        /* field validation */
+
         if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
                 || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty() || inKodeRak.isEmpty()
         ) {
@@ -351,7 +351,6 @@ public class ControllerBukuAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKodeBuku);
             stmt.setString(2, inJudul);
             stmt.setString(3, inPengarang);
@@ -361,7 +360,6 @@ public class ControllerBukuAdmin implements Initializable {
             stmt.setInt(9, Integer.parseInt(inStok));
             stmt.setString(10, inKodeRak);
 
-            /* non-required field */
             if (!inEdisi.isEmpty()) {
                 stmt.setInt(6, Integer.parseInt(inEdisi));
             } else {
@@ -374,10 +372,8 @@ public class ControllerBukuAdmin implements Initializable {
                 stmt.setNull(8, Types.INTEGER);
             }
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil ditambahkan");
                 showBuku();
@@ -410,7 +406,6 @@ public class ControllerBukuAdmin implements Initializable {
         String inStok = tfStok.getText();
         String inKodeRak = tfKodeRak.getText();
 
-        /* field validation */
         if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
                 || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty() || inKodeRak.isEmpty()
         ) {
@@ -429,7 +424,6 @@ public class ControllerBukuAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inJudul);
             stmt.setString(2, inPengarang);
             stmt.setString(3, inPenerbit);
@@ -439,7 +433,6 @@ public class ControllerBukuAdmin implements Initializable {
             stmt.setString(9, inKodeRak);
             stmt.setString(10, inKodeBuku);
 
-            /* non-required field */
             if (!inEdisi.isEmpty()) {
                 stmt.setInt(5, Integer.parseInt(inEdisi));
             } else {
@@ -452,16 +445,13 @@ public class ControllerBukuAdmin implements Initializable {
                 stmt.setNull(7, Types.INTEGER);
             }
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil diperbarui");
                 showBuku();
                 clearBuku();
             } else {
-                /* if value of kodeBuku not found */
                 JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal diperbarui!");
             }
 
@@ -476,7 +466,7 @@ public class ControllerBukuAdmin implements Initializable {
 
         String inKodeBuku = tfKode.getText();
 
-        /* field validation */
+
         if (inKodeBuku.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom kode harus terisi! Silahkan klik data buku yang akan dihapus terlebih dahulu.");
             throw new NullPointerException("Kolom kode masih kosong!");
@@ -487,23 +477,19 @@ public class ControllerBukuAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKodeBuku);
 
-            /* confirm delete action */
             int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data buku ini?");
 
             if (confirmDelete == 0) {
-                /* execute query and getting how many rows affected after query execution */
+
                 int rowsAffected = stmt.executeUpdate();
 
-                /* showing alert response */
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(null, rowsAffected + " buku berhasil dihapus");
                     showBuku();
                     clearBuku();
                 } else {
-                    /* if value of kodeBuku not found */
                     JOptionPane.showMessageDialog(null, "Kode buku '" + inKodeBuku + "' tidak ditemukan! Data buku gagal dihapus!");
                 }
             }

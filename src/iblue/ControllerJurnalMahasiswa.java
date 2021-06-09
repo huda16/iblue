@@ -70,10 +70,8 @@ public class ControllerJurnalMahasiswa implements Initializable {
 
         if (actionEvent.getSource() == btnDaftarJurnal) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarJurnalMahasiswa.fxml")));
                 stage.setScene(scene);
@@ -84,10 +82,8 @@ public class ControllerJurnalMahasiswa implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarArtikel) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarArtikelMahasiswa.fxml")));
                 stage.setScene(scene);
@@ -98,10 +94,8 @@ public class ControllerJurnalMahasiswa implements Initializable {
             }
         } else if (actionEvent.getSource() == btnDaftarBuku) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuMahasiswa.fxml")));
                 stage.setScene(scene);
@@ -124,10 +118,8 @@ public class ControllerJurnalMahasiswa implements Initializable {
             }
         } else if (actionEvent.getSource() == btnLogout) {
             try {
-                //add you loading or delays - ;-)
                 Node node = (Node) actionEvent.getSource();
                 Stage stage = (Stage) node.getScene().getWindow();
-                //stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginMahasiswa.fxml")));
                 stage.setScene(scene);

@@ -262,7 +262,6 @@ public class ControllerRakAdmin implements Initializable {
         String inLokasi = tfLokasi.getText();
         String inKeterangan = tfKeterangan.getText();
 
-        /* field validation */
         if (inKode.isEmpty() || inNama.isEmpty() || inLokasi.isEmpty() || inKeterangan.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Nama, Lokasi, dan Keterangan wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
@@ -274,16 +273,13 @@ public class ControllerRakAdmin implements Initializable {
 
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKode);
             stmt.setString(2, inNama);
             stmt.setString(3, inLokasi);
             stmt.setString(4, inKeterangan);
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " Rak berhasil ditambahkan");
                 showRak();
@@ -311,7 +307,6 @@ public class ControllerRakAdmin implements Initializable {
         String inLokasi = tfLokasi.getText();
         String inKeterangan = tfKeterangan.getText();
 
-        /* field validation */
         if (inKode.isEmpty() || inNama.isEmpty() || inLokasi.isEmpty() || inKeterangan.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Nama, Lokasi, dan Keterangan wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
@@ -323,22 +318,18 @@ public class ControllerRakAdmin implements Initializable {
 
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inNama);
             stmt.setString(2, inLokasi);
             stmt.setString(3, inKeterangan);
             stmt.setString(4, inKode);
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " Rak berhasil diperbarui");
                 showRak();
                 clearRak();
             } else {
-                /* if value of kodeBuku not found */
                 JOptionPane.showMessageDialog(null, "Kode rak '" + inKode + "' tidak ditemukan! Data rak gagal diperbarui!");
             }
 
@@ -355,7 +346,6 @@ public class ControllerRakAdmin implements Initializable {
 
         String inKode = tfKode.getText();
 
-        /* field validation */
         if (inKode.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom kode harus terisi! Silahkan klik data rak yang akan dihapus terlebih dahulu.");
             throw new NullPointerException("Kolom kode masih kosong!");
@@ -374,24 +364,19 @@ public class ControllerRakAdmin implements Initializable {
 
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inKode);
 
-            /* confirm delete action */
             int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data Rak ini?");
 
             if (confirmDelete == 0) {
-                /* execute query and getting how many rows affected after query execution */
 
                 int rowsAffected = stmt.executeUpdate();
 
-                /* showing alert response */
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(null, rowsAffected + " Rak berhasil dihapus");
                     showRak();
                     clearRak();
                 } else {
-                    /* if value of kodeRak not found */
                     JOptionPane.showMessageDialog(null, "Kode rak '" + inKode + "' tidak ditemukan! Data rak gagal dihapus!");
                 }
             }
@@ -408,17 +393,6 @@ public class ControllerRakAdmin implements Initializable {
         tfNama.setText("");
         tfLokasi.setText("");
         tfKeterangan.setText("");
-    }
-
-    private void executeQuery(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeUpdate(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
 
     private void setFieldValueFromTable(){

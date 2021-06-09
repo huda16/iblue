@@ -323,7 +323,6 @@ public class ControllerArtikelAdmin implements Initializable {
         boolean isAfterReview = inDipublikasikan.isAfter(inDireview);
         boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
 
-        /* field validation */
         if (inIdJurnal.isEmpty() || inJudul.isEmpty() || inNomor.isEmpty() || inHalamanAwal.isEmpty()
                 || inHalamanAkhir.isEmpty() || inDoi.isEmpty()|| inDidaftarkan == null || inDireview == null
                 || inDipublikasikan == null) {
@@ -349,7 +348,6 @@ public class ControllerArtikelAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inIdJurnal);
             stmt.setString(2, inJudul);
             stmt.setString(3, inPengarang);
@@ -361,10 +359,8 @@ public class ControllerArtikelAdmin implements Initializable {
             stmt.setDate(9, java.sql.Date.valueOf(Objects.requireNonNull(inDireview)));
             stmt.setDate(10, java.sql.Date.valueOf(Objects.requireNonNull(inDipublikasikan)));
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil ditambahkan");
                 showArtikel();
@@ -399,7 +395,7 @@ public class ControllerArtikelAdmin implements Initializable {
         boolean isAfterReview = inDipublikasikan.isAfter(inDireview);
         boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
 
-        /* field validation */
+
         if (inIdJurnal.isEmpty() || inJudul.isEmpty() || inNomor.isEmpty() || inHalamanAwal.isEmpty()
                 || inHalamanAkhir.isEmpty() || inDoi.isEmpty()|| inDidaftarkan == null || inDireview == null
                 || inDipublikasikan == null) {
@@ -424,7 +420,6 @@ public class ControllerArtikelAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inIdJurnal);
             stmt.setString(2, inJudul);
             stmt.setString(3, inPengarang);
@@ -437,16 +432,13 @@ public class ControllerArtikelAdmin implements Initializable {
             stmt.setDate(10, java.sql.Date.valueOf(Objects.requireNonNull(inDipublikasikan)));
             stmt.setInt(11, Integer.parseInt(inIdArtikel));
 
-            /* execute query and getting how many rows affected after query execution */
             int rowsAffected = stmt.executeUpdate();
 
-            /* showing success response */
             if (rowsAffected > 0) {
                 JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil diperbarui");
                 showArtikel();
                 clearArtikel();
             } else {
-                /* if value of kodeBuku not found */
                 JOptionPane.showMessageDialog(null, "ID artikel '" + inIdArtikel + "' tidak ditemukan! Data artikel gagal diperbarui!");
             }
 
@@ -462,7 +454,6 @@ public class ControllerArtikelAdmin implements Initializable {
 
         String inIdArtikel = tfIdArtikel.getText();
 
-        /* field validation */
         if (inIdArtikel.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Kolom ID Artikel harus terisi! Silahkan klik data artikel yang akan dihapus terlebih dahulu.");
             throw new NullPointerException("Kolom ID Artikel masih kosong!");
@@ -473,23 +464,18 @@ public class ControllerArtikelAdmin implements Initializable {
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
 
-            /* required field */
             stmt.setString(1, inIdArtikel);
 
-            /* confirm delete action */
             int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data artikel ini?");
 
             if (confirmDelete == 0) {
-                /* execute query and getting how many rows affected after query execution */
                 int rowsAffected = stmt.executeUpdate();
 
-                /* showing alert response */
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil dihapus");
                     showArtikel();
                     clearArtikel();
                 } else {
-                    /* if value of kodeBuku not found */
                     JOptionPane.showMessageDialog(null, "Kode buku '" + inIdArtikel + "' tidak ditemukan! Data artikel gagal dihapus!");
                 }
             }
@@ -513,17 +499,6 @@ public class ControllerArtikelAdmin implements Initializable {
         tfDaftar.setValue(null);
         tfReview.setValue(null);
         tfPublikasi.setValue(null);
-    }
-
-    private void executeQuery(String query) {
-        Connection conn = getConnection();
-        Statement st;
-        try{
-            st = conn.createStatement();
-            st.executeUpdate(query);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
     }
 
     private void setFieldValueFromTable(){

@@ -37,7 +37,6 @@ public class ControllerLoginAdmin implements Initializable {
     @FXML
     private Hyperlink link;
 
-    /// --
     Connection con = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -79,7 +78,7 @@ public class ControllerLoginAdmin implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
         if (con == null) {
             lblErrors.setTextFill(Color.TOMATO);
             lblErrors.setText("Server Error : Check");
@@ -93,7 +92,6 @@ public class ControllerLoginAdmin implements Initializable {
         con = ConnectionDB.conDB();
     }
 
-    //we gonna use string to check for status
     private String logIn() {
         String status = "Success";
         String username = txtUsername.getText();
@@ -102,7 +100,6 @@ public class ControllerLoginAdmin implements Initializable {
             setLblError(Color.TOMATO, "Empty credentials");
             status = "Error";
         } else {
-            //query
             String sql = "SELECT * FROM admin WHERE id = ? and password = ?";
             try {
                 preparedStatement = con.prepareStatement(sql);
