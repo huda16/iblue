@@ -50,4 +50,11 @@ public class Jurnal {
         this.volume = volume;
     }
 
+    public String getKodeRak() {
+        return kodeRak;
+    }
+
+    public void setKodeRak(String kodeRak) {
+        this.kodeRak = kodeRak;
+    }
 }

@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #273C4F #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerDaftarMahasiswa">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" style="-fx-background-color: #273C4F #273C4F;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iblue.ControllerRakMahasiswa">
     <VBox layoutY="-2.0" prefHeight="768.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3;">
         <children>
             <Pane prefHeight="200.0" prefWidth="200.0">
@@ -31,21 +31,7 @@
                     </Text>
                 </children>
             </Pane>
-            <Button fx:id="btnDaftarMahasiswa" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Mahasiswa" textFill="WHITE">
-                <graphic>
-                </graphic>
-                <font>
-                    <Font name="Open Sans Regular" size="18.0" />
-                </font>
-            </Button>
-            <Button fx:id="btnDaftarPeminjaman" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Peminjaman" textFill="WHITE">
-                <graphic>
-                </graphic>
-                <font>
-                    <Font name="Open Sans Regular" size="18.0" />
-                </font>
-            </Button>
-         <Button fx:id="btnDaftarRak" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Rak" textFill="WHITE">
+         <Button fx:id="btnDaftarRak" graphicTextGap="20.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Rak" textFill="WHITE">
             <font>
                <Font name="Open Sans Regular" size="18.0" />
             </font>
@@ -92,22 +78,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
     </GridPane>
-      <TableView fx:id="tMahasiswa" layoutX="348.0" layoutY="115.0" prefHeight="620.0" prefWidth="920.0">
+          <TextField fx:id="tfKeyword" layoutX="336.0" layoutY="39.0" prefHeight="35.0" prefWidth="1010.0" promptText="Kode Rak" AnchorPane.topAnchor="39.0">
+      <font>
+         <Font name="Open Sans Regular" size="15.0" />
+      </font>
+          </TextField>
+      <TableView fx:id="tRak" layoutX="337.0" layoutY="100.0" prefHeight="637.0" prefWidth="1010.0">
           <columns>
-              <TableColumn fx:id="colNim" prefWidth="84.0" text="NIM" />
-              <TableColumn fx:id="colNama" prefWidth="222.0" text="Nama" />
-              <TableColumn fx:id="colEmail" prefWidth="151.0" text="Alamat Surel" />
-              <TableColumn fx:id="colProdi" prefWidth="213.0" text="Program Studi" />
-         <TableColumn fx:id="colTelepon" prefWidth="213.0" text="Nomor Telepon" />
-         <TableColumn fx:id="colAlamat" prefWidth="213.0" text="Alamat" />
+              <TableColumn fx:id="colKode" prefWidth="177.0" text="Kode" />
+              <TableColumn fx:id="colNama" prefWidth="282.0" text="Nama" />
+              <TableColumn fx:id="colLokasi" prefWidth="75.0" text="Lokasi" />
+              <TableColumn fx:id="colKeterangan" prefWidth="75.0" text="Keterangan" />
           </columns>
           <columnResizePolicy>
               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
           </columnResizePolicy>
       </TableView>
-          <TextField fx:id="tfKeyword" layoutX="348.0" layoutY="58.0" prefHeight="31.0" prefWidth="920.0" promptText="NIM Mahasiswa">
-      <font>
-         <Font name="Open Sans Regular" size="15.0" />
-      </font>
-          </TextField>
 </AnchorPane>

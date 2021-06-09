@@ -48,6 +48,11 @@
                     <Font name="Open Sans Regular" size="18.0" />
                 </font>
             </Button>
+         <Button fx:id="btnDaftarRak" graphicTextGap="20.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Rak" textFill="WHITE">
+            <font>
+               <Font name="Open Sans Regular" size="18.0" />
+            </font>
+         </Button>
             <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                 <graphic>
                 </graphic>
@@ -137,6 +142,7 @@
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
                             <Label text="Kode" textFill="WHITE">
@@ -199,18 +205,25 @@
                         <font>
                            <Font name="Open Sans Regular" size="15.0" />
                         </font></TextField>
+                     <Label text="Kode Rak" textFill="WHITE" GridPane.rowIndex="4">
+                        <font>
+                           <Font name="Open Sans Regular" size="16.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="tfKodeRak" promptText="Kode Rak" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         </children>
                     </GridPane>
                 </top>
             </BorderPane>
         </top>
         <center>
-            <TableView fx:id="tJurnal" prefHeight="485.0" prefWidth="920.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tJurnal" prefHeight="411.0" prefWidth="920.0" BorderPane.alignment="CENTER">
                 <columns>
-                    <TableColumn fx:id="colKode" prefWidth="75.0" text="Kode" />
-                    <TableColumn fx:id="colJudul" prefWidth="75.0" text="Judul" />
+                    <TableColumn fx:id="colKode" prefWidth="126.0" text="Kode" />
+                    <TableColumn fx:id="colJudul" prefWidth="333.0" text="Judul" />
                     <TableColumn fx:id="colTahun" prefWidth="75.0" text="Tahun" />
                     <TableColumn fx:id="colVolume" prefWidth="75.0" text="Volume" />
+               <TableColumn fx:id="colKodeRak" prefWidth="75.0" text="Kode Rak" />
                 </columns>
                 <BorderPane.margin>
                     <Insets top="16.0" />

@@ -63,7 +63,7 @@ public class ControllerJurnalMahasiswa implements Initializable {
     private TableColumn<Jurnal, Integer> colVolume;
 
     @FXML
-    private TableColumn<Buku, String> colKodeRak;
+    private TableColumn<Jurnal, String> colKodeRak;
 
     public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
 

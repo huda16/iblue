@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 09 Jun 2021 pada 03.30
--- Versi server: 10.4.16-MariaDB
--- Versi PHP: 7.4.12
+-- Generation Time: Jun 09, 2021 at 05:00 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 
 DELIMITER $$
 --
--- Prosedur
+-- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `add_transaction` (IN `idPeminjam` INT(11), IN `idBuku` VARCHAR(255))  begin
 declare stokBuku int;
@@ -46,7 +46,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -59,7 +59,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id`, `nama`, `password`, `telepon`, `alamat`, `status`) VALUES
@@ -68,7 +68,7 @@ INSERT INTO `admin` (`id`, `nama`, `password`, `telepon`, `alamat`, `status`) VA
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `artikel`
+-- Table structure for table `artikel`
 --
 
 CREATE TABLE `artikel` (
@@ -86,7 +86,7 @@ CREATE TABLE `artikel` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `artikel`
+-- Dumping data for table `artikel`
 --
 
 INSERT INTO `artikel` (`id`, `idJurnal`, `judul`, `pengarang`, `nomor`, `halamanAwal`, `halamanAkhir`, `doi`, `tanggalDidaftarkan`, `tanggalDireview`, `tanggalDipublikasikan`) VALUES
@@ -98,7 +98,7 @@ INSERT INTO `artikel` (`id`, `idJurnal`, `judul`, `pengarang`, `nomor`, `halaman
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `buku`
+-- Table structure for table `buku`
 --
 
 CREATE TABLE `buku` (
@@ -111,27 +111,27 @@ CREATE TABLE `buku` (
   `tanggalPublikasi` date NOT NULL,
   `isbn` int(11) DEFAULT NULL,
   `stok` int(11) NOT NULL,
-  `kodeRak` varchar(255) NOT NULL
+  `kodeRak` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `buku`
+-- Dumping data for table `buku`
 --
 
 INSERT INTO `buku` (`kodeBuku`, `judulBuku`, `pengarang`, `penerbit`, `kota`, `edisi`, `tanggalPublikasi`, `isbn`, `stok`, `kodeRak`) VALUES
-('B001', 'Doraemon', 'Fujiko F. Fujio', '', '', NULL, '2021-06-08', NULL, 1, ''),
-('C001', 'Laskar Pelangii', 'Andrea Hirata', '', '', 0, '2021-06-10', 0, 0, ''),
-('D001', 'Harry Potter Harry Potter dan batu bertuah', 'J.K. Rowling', '', '', 0, '2021-06-18', 0, 0, ''),
-('F001', 'Habibie & Ainun', 'Bacharuddin Jusuf Habibie', 'PT THC Mandiri', 'Jakarta', 1, '2021-06-07', 97897912, 10, ''),
-('G001', 'C++: a Dialogue', 'Steve Heller', 'Prentice Hall', 'London', 1, '2003-06-07', 2131, 10, ''),
-('H001', 'Milea, suara dari Dilan', 'Pidi Baiq', 'PT Mizan Pustaka', 'Bandung', 1, '2016-06-07', 0, 10, ''),
-('I001', 'Pemrograman Berbasis Objek Dengan Bahasa Java', 'Indrajani', 'Elex Media', 'Jakarta', 1, '2021-06-07', 979273333, 11, ''),
-('J001', 'Atomic Habits', 'James Clear', 'Penguin Random House', 'Lupa', NULL, '2018-03-29', NULL, 1, '');
+('B001', 'Doraemon', 'Fujiko F. Fujio', 'Elex Media Komputindo', 'Tokyo', 1, '2021-06-08', 0, 1, 'N001'),
+('C001', 'Laskar Pelangii', 'Andrea Hirata', 'Mizan Media Utama', 'Bandung', 1, '2008-06-07', 979306279, 10, 'N001'),
+('D001', 'Harry Potter Harry Potter dan batu bertuah', 'J.K. Rowling', 'Gramedia Pustaka Utama', 'Jakarta', 1, '2021-06-18', 747532699, 10, 'N001'),
+('F001', 'Habibie & Ainun', 'Bacharuddin Jusuf Habibie', 'PT THC Mandiri', 'Jakarta', 1, '2021-06-07', 97897912, 10, 'N001'),
+('G001', 'C++: a Dialogue', 'Steve Heller', 'Prentice Hall', 'London', 1, '2003-06-07', 2131, 10, 'SE001'),
+('H001', 'Milea, suara dari Dilan', 'Pidi Baiq', 'PT Mizan Pustaka', 'Bandung', 1, '2016-06-07', 0, 10, 'N001'),
+('I001', 'Pemrograman Berbasis Objek Dengan Bahasa Java', 'Indrajani', 'Elex Media', 'Jakarta', 1, '2021-06-07', 979273333, 11, 'CS001'),
+('J001', 'Atomic Habits', 'James Clear', 'Penguin Random House', 'Lupa', 0, '2018-03-29', 0, 1, 'S001');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `denda_transaksi`
+-- Table structure for table `denda_transaksi`
 --
 
 CREATE TABLE `denda_transaksi` (
@@ -141,7 +141,7 @@ CREATE TABLE `denda_transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `denda_transaksi`
+-- Dumping data for table `denda_transaksi`
 --
 
 INSERT INTO `denda_transaksi` (`id`, `idTransaksi`, `denda`) VALUES
@@ -162,7 +162,7 @@ INSERT INTO `denda_transaksi` (`id`, `idTransaksi`, `denda`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jurnal`
+-- Table structure for table `jurnal`
 --
 
 CREATE TABLE `jurnal` (
@@ -170,24 +170,24 @@ CREATE TABLE `jurnal` (
   `judul` varchar(255) NOT NULL,
   `tahun` int(11) NOT NULL,
   `volume` int(11) NOT NULL,
-  `kodeRak` varchar(255) NOT NULL
+  `kodeRak` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `jurnal`
+-- Dumping data for table `jurnal`
 --
 
 INSERT INTO `jurnal` (`kode`, `judul`, `tahun`, `volume`, `kodeRak`) VALUES
-('JS001', 'Jurnal Science', 2001, 10, ''),
-('JS002', 'IJOST', 2020, 1, ''),
-('JS003', 'IJOST', 2020, 2, ''),
-('JS004', 'SEICT', 2021, 1, ''),
+('JS001', 'Jurnal Science', 2001, 10, 'CS001'),
+('JS002', 'IJOST', 2020, 1, 'SE001'),
+('JS003', 'IJOST', 2020, 2, 'SE001'),
+('JS004', 'SEICT', 2021, 1, 'SE001'),
 ('JS005', 'Computer Science', 2020, 1, 'CS001');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mahasiswa`
+-- Table structure for table `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -202,7 +202,7 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `mahasiswa`
+-- Dumping data for table `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`id`, `name`, `email`, `password`, `prodi`, `telepon`, `alamat`, `aktif`) VALUES
@@ -213,7 +213,7 @@ INSERT INTO `mahasiswa` (`id`, `name`, `email`, `password`, `prodi`, `telepon`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `rak`
+-- Table structure for table `rak`
 --
 
 CREATE TABLE `rak` (
@@ -224,16 +224,19 @@ CREATE TABLE `rak` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `rak`
+-- Dumping data for table `rak`
 --
 
 INSERT INTO `rak` (`kode`, `nama`, `lokasi`, `keterangan`) VALUES
-('CS001', 'Ilmu Komputer', 'Ruangan 1 Lantai 1', 'Buku tentang ilmu komputer');
+('CS001', 'Ilmu Komputer', 'Ruang 1 Lantai 1', 'Buku tentang ilmu komputer'),
+('N001', 'Novel', 'Ruang 2 Lantai 1', 'Novel Random'),
+('S001', 'Sastra', 'Ruang 2 Lantai 2', 'Buku tentang sastra'),
+('SE001', 'Rekayasa Perangkat Lunak', 'Ruang 1 Lantai 2', 'Buku tentang rekayasa perangkat lunak');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi`
+-- Table structure for table `transaksi`
 --
 
 CREATE TABLE `transaksi` (
@@ -246,7 +249,7 @@ CREATE TABLE `transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `transaksi`
+-- Dumping data for table `transaksi`
 --
 
 INSERT INTO `transaksi` (`id`, `idPeminjam`, `idBuku`, `tanggalPinjam`, `batasTanggal`, `tanggalKembali`) VALUES
@@ -264,7 +267,7 @@ INSERT INTO `transaksi` (`id`, `idPeminjam`, `idBuku`, `tanggalPinjam`, `batasTa
 (13, 1904207, 'B001', '2021-06-09 07:29:53', '2021-06-16 07:29:53', '2021-06-09 07:31:07');
 
 --
--- Trigger `transaksi`
+-- Triggers `transaksi`
 --
 DELIMITER $$
 CREATE TRIGGER `add_denda` AFTER UPDATE ON `transaksi` FOR EACH ROW begin
@@ -284,53 +287,53 @@ DELIMITER ;
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `artikel`
+-- Indexes for table `artikel`
 --
 ALTER TABLE `artikel`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_jurnal` (`idJurnal`);
 
 --
--- Indeks untuk tabel `buku`
+-- Indexes for table `buku`
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`kodeBuku`),
-  ADD KEY `kode_rak` (`kodeRak`);
+  ADD KEY `kodeRak` (`kodeRak`);
 
 --
--- Indeks untuk tabel `denda_transaksi`
+-- Indexes for table `denda_transaksi`
 --
 ALTER TABLE `denda_transaksi`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_transaksi` (`idTransaksi`);
 
 --
--- Indeks untuk tabel `jurnal`
+-- Indexes for table `jurnal`
 --
 ALTER TABLE `jurnal`
   ADD PRIMARY KEY (`kode`),
-  ADD KEY `kode_rak` (`kodeRak`);
+  ADD KEY `kodeRak` (`kodeRak`);
 
 --
--- Indeks untuk tabel `mahasiswa`
+-- Indexes for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `rak`
+-- Indexes for table `rak`
 --
 ALTER TABLE `rak`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indeks untuk tabel `transaksi`
+-- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`),
@@ -338,61 +341,48 @@ ALTER TABLE `transaksi`
   ADD KEY `id_peminjam` (`idPeminjam`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `artikel`
+-- AUTO_INCREMENT for table `artikel`
 --
 ALTER TABLE `artikel`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `denda_transaksi`
+-- AUTO_INCREMENT for table `denda_transaksi`
 --
 ALTER TABLE `denda_transaksi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi`
+-- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `artikel`
+-- Constraints for table `artikel`
 --
 ALTER TABLE `artikel`
   ADD CONSTRAINT `artikel_ibfk_1` FOREIGN KEY (`idJurnal`) REFERENCES `jurnal` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `buku`
+-- Constraints for table `buku`
 --
 ALTER TABLE `buku`
   ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`kodeRak`) REFERENCES `rak` (`kode`);
 
 --
--- Ketidakleluasaan untuk tabel `denda_transaksi`
---
-ALTER TABLE `denda_transaksi`
-  ADD CONSTRAINT `denda_transaksi_ibfk_1` FOREIGN KEY (`idTransaksi`) REFERENCES `transaksi` (`id`);
-
---
--- Ketidakleluasaan untuk tabel `jurnal`
+-- Constraints for table `jurnal`
 --
 ALTER TABLE `jurnal`
   ADD CONSTRAINT `jurnal_ibfk_1` FOREIGN KEY (`kodeRak`) REFERENCES `rak` (`kode`);
-
---
--- Ketidakleluasaan untuk tabel `transaksi`
---
-ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idPeminjam`) REFERENCES `mahasiswa` (`id`),
-  ADD CONSTRAINT `transaksi_ibfk_4` FOREIGN KEY (`idBuku`) REFERENCES `buku` (`kodeBuku`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
