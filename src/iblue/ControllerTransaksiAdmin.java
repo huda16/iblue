@@ -58,6 +58,9 @@ public class ControllerTransaksiAdmin implements Initializable {
     private Button btnDaftarPeminjaman;
 
     @FXML
+    private Button btnDaftarRak;
+
+    @FXML
     private Button btnDaftarBuku;
 
     @FXML
@@ -117,6 +120,18 @@ public class ControllerTransaksiAdmin implements Initializable {
                 // stage.setMaximized(true);
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarRak) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakAdmin.fxml")));
                 stage.setScene(scene);
                 stage.show();
 

@@ -39,6 +39,9 @@ public class ControllerArtikelMahasiswa implements Initializable {
     private Button btnDaftarArtikel;
 
     @FXML
+    private Button btnDaftarRak;
+
+    @FXML
     private TableView<Artikel> tArtikel;
 
     @FXML
@@ -106,6 +109,18 @@ public class ControllerArtikelMahasiswa implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuMahasiswa.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarRak) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -198,7 +213,7 @@ public class ControllerArtikelMahasiswa implements Initializable {
             if(keyword == null || keyword.length() == 0){
                 filteredArtikel.setPredicate(b -> true);
             } else {
-                filteredArtikel.setPredicate(b -> b.getJudul().toLowerCase().contains(keyword));
+                filteredArtikel.setPredicate(b -> b.getJudul().toLowerCase().contains(keyword.toLowerCase()));
             }
             tArtikel.setItems(filteredArtikel);
         });

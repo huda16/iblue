@@ -6,14 +6,16 @@ public class Jurnal {
 
     private String kode;
     private String judul;
-    private String tahun;
+    private int tahun;
     private int volume;
+    private String kodeRak;
 
-    public Jurnal(String kode, String judul, String tahun, int volume){
+    public Jurnal(String kode, String judul, int tahun, int volume, String kodeRak){
         this.kode = kode;
         this.judul = judul;
         this.tahun = tahun;
         this.volume = volume;
+        this.kodeRak = kodeRak;
     }
 
     public String getKode() {
@@ -32,11 +34,11 @@ public class Jurnal {
         this.judul = judul;
     }
 
-    public String getTahun() {
+    public int getTahun() {
         return tahun;
     }
 
-    public void setTahun(String tahun) {
+    public void setTahun(int tahun) {
         this.tahun = tahun;
     }
 

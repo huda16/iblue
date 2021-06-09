@@ -13,8 +13,9 @@ public class Buku {
     private Date tanggalPublikasi;
     private int isbn;
     private int stok;
+    private String kodeRak;
 
-    public Buku(String kodeBuku, String judulBuku, String pengarang, String penerbit, String kota, int edisi, Date tanggalPublikasi, int isbn, int stok) {
+    public Buku(String kodeBuku, String judulBuku, String pengarang, String penerbit, String kota, int edisi, Date tanggalPublikasi, int isbn, int stok, String kodeRak) {
         this.kodeBuku = kodeBuku;
         this.judulBuku = judulBuku;
         this.pengarang = pengarang;
@@ -24,6 +25,7 @@ public class Buku {
         this.tanggalPublikasi = tanggalPublikasi;
         this.isbn = isbn;
         this.stok = stok;
+        this.kodeRak = kodeRak;
     }
 
     public String getKodeBuku() {
@@ -96,5 +98,13 @@ public class Buku {
 
     public void setStok(int stok) {
         this.stok = stok;
+    }
+
+    public String getKodeRak() {
+        return kodeRak;
+    }
+
+    public void setKodeRak(String kodeRak) {
+        this.kodeRak = kodeRak;
     }
 }

@@ -33,6 +33,9 @@ public class ControllerBukuMahasiswa implements Initializable {
     private Button btnDaftarBuku;
 
     @FXML
+    private Button btnDaftarRak;
+
+    @FXML
     private Button btnDaftarJurnal;
 
     @FXML
@@ -67,6 +70,9 @@ public class ControllerBukuMahasiswa implements Initializable {
 
     @FXML
     private TableColumn<Buku, Integer> colStok;
+
+    @FXML
+    private TableColumn<Buku, String> colKodeRak;
 
     String query = "";
 
@@ -103,6 +109,18 @@ public class ControllerBukuMahasiswa implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarBukuMahasiswa.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarRak) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakMahasiswa.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -160,7 +178,8 @@ public class ControllerBukuMahasiswa implements Initializable {
                         resultSet.getInt("edisi"),
                         resultSet.getDate("tanggalPublikasi"),
                         resultSet.getInt("isbn"),
-                        resultSet.getInt("stok"));
+                        resultSet.getInt("stok"),
+                        resultSet.getString("kodeRak"));
                 daftarBuku.add(buku);
             }
         } catch (Exception e) {
@@ -180,6 +199,7 @@ public class ControllerBukuMahasiswa implements Initializable {
         colPublikasi.setCellValueFactory(new PropertyValueFactory<>("tanggalPublikasi"));
         colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         colStok.setCellValueFactory(new PropertyValueFactory<>("stok"));
+        colKodeRak.setCellValueFactory(new PropertyValueFactory<>("kodeRak"));
 
         tBuku.setItems(list);
 
@@ -191,7 +211,7 @@ public class ControllerBukuMahasiswa implements Initializable {
             if(keyword == null || keyword.length() == 0){
                 filteredBuku.setPredicate(b -> true);
             } else {
-                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword));
+                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword.toLowerCase()));
             }
             tBuku.setItems(filteredBuku);
         });

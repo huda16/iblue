@@ -53,6 +53,9 @@ public class ControllerBukuAdmin implements Initializable {
     private TextField tfStok;
 
     @FXML
+    private TextField tfKodeRak;
+
+    @FXML
     private Button btnInsertBuku;
 
     @FXML
@@ -72,6 +75,9 @@ public class ControllerBukuAdmin implements Initializable {
 
     @FXML
     private Button btnDaftarPeminjaman;
+
+    @FXML
+    private Button btnDaftarRak;
 
     @FXML
     private Button btnDaftarBuku;
@@ -112,6 +118,8 @@ public class ControllerBukuAdmin implements Initializable {
     @FXML
     private TableColumn<Buku, Integer> colStok;
 
+    @FXML
+    private TableColumn<Buku, String> colKodeRak;
 
     public static boolean isNumberOnly(String s) {
         Pattern pattern = Pattern.compile("^\\d*$");
@@ -164,6 +172,18 @@ public class ControllerBukuAdmin implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(Objects.requireNonNull(getClass().getResource("transaksiAdmin.fxml"))));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarRak) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakAdmin.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -259,7 +279,8 @@ public class ControllerBukuAdmin implements Initializable {
                         resultSet.getInt("edisi"),
                         resultSet.getDate("tanggalPublikasi"),
                         resultSet.getInt("isbn"),
-                        resultSet.getInt("stok"));
+                        resultSet.getInt("stok"),
+                        resultSet.getString("kodeRak"));
                 daftarBuku.add(buku);
             }
         } catch (Exception e) {
@@ -279,6 +300,7 @@ public class ControllerBukuAdmin implements Initializable {
         colPublikasi.setCellValueFactory(new PropertyValueFactory<>("tanggalPublikasi"));
         colIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
         colStok.setCellValueFactory(new PropertyValueFactory<>("stok"));
+        colKodeRak.setCellValueFactory(new PropertyValueFactory<>("kodeRak"));
 
         tBuku.setItems(list);
 
@@ -290,7 +312,7 @@ public class ControllerBukuAdmin implements Initializable {
             if(keyword == null || keyword.length() == 0){
                 filteredBuku.setPredicate(b -> true);
             } else {
-                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword));
+                filteredBuku.setPredicate(b -> b.getJudulBuku().toLowerCase().contains(keyword.toLowerCase()));
             }
             tBuku.setItems(filteredBuku);
         });
@@ -307,13 +329,14 @@ public class ControllerBukuAdmin implements Initializable {
         LocalDate inPublikasi = tfPublikasi.getValue();
         String inIsbn = tfIsbn.getText();
         String inStok = tfStok.getText();
+        String inKodeRak = tfKodeRak.getText();
 
         /* field validation */
         if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
-                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty()
+                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty() || inKodeRak.isEmpty()
         ) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Pengarang, Penerbit, " +
-                    "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
+                    "Kota, Tanggal Publikasi, Stok, dan Kode Rak wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
         else if (isNotNumberOnly(inEdisi) || isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
@@ -322,8 +345,8 @@ public class ControllerBukuAdmin implements Initializable {
         }
 
         String query = "INSERT INTO buku"
-                + "(kodeBuku, judulBuku, pengarang, penerbit, kota, edisi, tanggalPublikasi, isbn, stok)"
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(kodeBuku, judulBuku, pengarang, penerbit, kota, edisi, tanggalPublikasi, isbn, stok, kodeRak)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
@@ -336,6 +359,7 @@ public class ControllerBukuAdmin implements Initializable {
             stmt.setString(5, inKota);
             stmt.setDate(7, java.sql.Date.valueOf(Objects.requireNonNull(inPublikasi)));
             stmt.setInt(9, Integer.parseInt(inStok));
+            stmt.setString(10, inKodeRak);
 
             /* non-required field */
             if (!inEdisi.isEmpty()) {
@@ -384,13 +408,14 @@ public class ControllerBukuAdmin implements Initializable {
         LocalDate inPublikasi = tfPublikasi.getValue();
         String inIsbn = tfIsbn.getText();
         String inStok = tfStok.getText();
+        String inKodeRak = tfKodeRak.getText();
 
         /* field validation */
         if (inKodeBuku.isEmpty() || inJudul.isEmpty() || inPengarang.isEmpty() || inPenerbit.isEmpty()
-                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty()
+                || inKota.isEmpty() || inPublikasi == null || inStok.isEmpty() || inKodeRak.isEmpty()
         ) {
             JOptionPane.showMessageDialog(null, "Kolom Kode, Judul, Pengarang, Penerbit, " +
-                    "Kota, Tanggal Publikasi, dan Stok wajib diisi!");
+                    "Kota, Tanggal Publikasi, Stok, dan Kode Rak wajib diisi!");
             throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
         }
         else if (isNotNumberOnly(inEdisi) || isNotNumberOnly(inIsbn) || isNotNumberOnly(inStok)) {
@@ -399,7 +424,7 @@ public class ControllerBukuAdmin implements Initializable {
         }
 
         String query = "UPDATE buku SET judulBuku = ?, pengarang = ?, penerbit = ?, kota = ?, edisi = ?," +
-                "tanggalPublikasi = ?, isbn = ?, stok = ? WHERE kodeBuku = ?";
+                "tanggalPublikasi = ?, isbn = ?, stok = ?, kodeRak = ? WHERE kodeBuku = ?";
 
         try {
             PreparedStatement stmt = getConnection().prepareStatement(query);
@@ -411,7 +436,8 @@ public class ControllerBukuAdmin implements Initializable {
             stmt.setString(4, inKota);
             stmt.setDate(6, java.sql.Date.valueOf(Objects.requireNonNull(inPublikasi)));
             stmt.setInt(8, Integer.parseInt(inStok));
-            stmt.setString(9, inKodeBuku);
+            stmt.setString(9, inKodeRak);
+            stmt.setString(10, inKodeBuku);
 
             /* non-required field */
             if (!inEdisi.isEmpty()) {
@@ -441,7 +467,6 @@ public class ControllerBukuAdmin implements Initializable {
 
         } catch (SQLException sqlException) {
             int errorCode = sqlException.getErrorCode();
-
             JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat memperbarui data buku!");
             System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
         }

@@ -27,7 +27,7 @@ import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class ControllerJurnalMahasiswa implements Initializable {
+public class ControllerRakMahasiswa implements Initializable {
 
     @FXML
     private Button btnDaftarBuku;
@@ -39,31 +39,26 @@ public class ControllerJurnalMahasiswa implements Initializable {
     private Button btnDaftarArtikel;
 
     @FXML
-    private Button btnDaftarRak;
-
-    @FXML
     private Button btnLogout;
 
     @FXML
     private TextField tfKeyword;
 
     @FXML
-    private TableView<Jurnal> tJurnal;
+    private TableView<Rak> tRak;
 
     @FXML
-    private TableColumn<Jurnal, String> colKode;
+    private TableColumn<Rak, String> colKode;
 
     @FXML
-    private TableColumn<Jurnal, String> colJudul;
+    private TableColumn<Rak, String> colNama;
 
     @FXML
-    private TableColumn<Jurnal, Year> colTahun;
+    private TableColumn<Rak, String> colLokasi;
 
     @FXML
-    private TableColumn<Jurnal, Integer> colVolume;
+    private TableColumn<Rak, String> colKeterangan;
 
-    @FXML
-    private TableColumn<Buku, String> colKodeRak;
 
     public void handleButtonAction(javafx.event.ActionEvent actionEvent) {
 
@@ -110,18 +105,6 @@ public class ControllerJurnalMahasiswa implements Initializable {
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
-        } else if (actionEvent.getSource() == btnDaftarRak) {
-            try {
-                Node node = (Node) actionEvent.getSource();
-                Stage stage = (Stage) node.getScene().getWindow();
-                stage.close();
-                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakMahasiswa.fxml")));
-                stage.setScene(scene);
-                stage.show();
-
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
         } else if (actionEvent.getSource() == btnLogout) {
             try {
                 //add you loading or delays - ;-)
@@ -142,7 +125,7 @@ public class ControllerJurnalMahasiswa implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        showJurnal();
+        showRak();
     }
 
     public Connection getConnection() {
@@ -156,51 +139,49 @@ public class ControllerJurnalMahasiswa implements Initializable {
         }
     }
 
-    public ObservableList<Jurnal> getDaftarJurnal() {
-        ObservableList<Jurnal> daftarJurnal = FXCollections.observableArrayList();
+    public ObservableList<Rak> getDaftarRak() {
+        ObservableList<Rak> daftarRak = FXCollections.observableArrayList();
         Statement statement;
         ResultSet resultSet;
 
         try {
             Connection conn = getConnection();
-            String query = "SELECT * FROM jurnal";
+            String query = "SELECT * FROM rak";
             statement = conn.createStatement();
             resultSet = statement.executeQuery(query);
-            Jurnal jurnal;
+            Rak rak;
             while (resultSet.next()) {
-                jurnal = new Jurnal(resultSet.getString("kode"),
-                        resultSet.getString("judul"),
-                        resultSet.getInt("tahun"),
-                        resultSet.getInt("volume"),
-                        resultSet.getString("kodeRak"));
-                daftarJurnal.add(jurnal);
+                rak = new Rak(resultSet.getString("kode"),
+                        resultSet.getString("nama"),
+                        resultSet.getString("lokasi"),
+                        resultSet.getString("keterangan"));
+                daftarRak.add(rak);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return daftarJurnal;
+        return daftarRak;
     }
 
-    public void showJurnal(){
-        ObservableList<Jurnal> list = getDaftarJurnal();
+    public void showRak(){
+        ObservableList<Rak> list = getDaftarRak();
         colKode.setCellValueFactory(new PropertyValueFactory<>("kode"));
-        colJudul.setCellValueFactory(new PropertyValueFactory<>("judul"));
-        colTahun.setCellValueFactory(new PropertyValueFactory<>("tahun"));
-        colVolume.setCellValueFactory(new PropertyValueFactory<>("volume"));
-        colKodeRak.setCellValueFactory(new PropertyValueFactory<>("kodeRak"));
-        tJurnal.setItems(list);
+        colNama.setCellValueFactory(new PropertyValueFactory<>("nama"));
+        colLokasi.setCellValueFactory(new PropertyValueFactory<>("lokasi"));
+        colKeterangan.setCellValueFactory(new PropertyValueFactory<>("keterangan"));
+        tRak.setItems(list);
 
-        FilteredList<Jurnal> filteredJurnal = new FilteredList(getDaftarJurnal(), b -> true);
+        FilteredList<Rak> filteredRak = new FilteredList(getDaftarRak(), b -> true);
 
         tfKeyword.textProperty().addListener((observable) -> {
             String keyword = tfKeyword.getText();
 
             if(keyword == null || keyword.length() == 0){
-                filteredJurnal.setPredicate(b -> true);
+                filteredRak.setPredicate(b -> true);
             } else {
-                filteredJurnal.setPredicate(b -> b.getJudul().toLowerCase().contains(keyword.toLowerCase()));
+                filteredRak.setPredicate(b -> b.getKode().toLowerCase().contains(keyword.toLowerCase()));
             }
-            tJurnal.setItems(filteredJurnal);
+            tRak.setItems(filteredRak);
         });
 
     }

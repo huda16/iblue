@@ -14,16 +14,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Objects;
 import java.util.ResourceBundle;
+
+import static iblue.ControllerBukuAdmin.isNotNumberOnly;
 
 public class ControllerArtikelAdmin implements Initializable {
 
@@ -80,6 +81,9 @@ public class ControllerArtikelAdmin implements Initializable {
 
     @FXML
     private Button btnDaftarPeminjaman;
+
+    @FXML
+    private Button btnDaftarRak;
 
     @FXML
     private Button btnDaftarBuku;
@@ -154,6 +158,18 @@ public class ControllerArtikelAdmin implements Initializable {
                 Stage stage = (Stage) node.getScene().getWindow();
                 stage.close();
                 Scene scene = new Scene(FXMLLoader.load(getClass().getResource("transaksiAdmin.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        } else if (actionEvent.getSource() == btnDaftarRak) {
+            try {
+                Node node = (Node) actionEvent.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("DaftarRakAdmin.fxml")));
                 stage.setScene(scene);
                 stage.show();
 
@@ -283,7 +299,7 @@ public class ControllerArtikelAdmin implements Initializable {
             if(keyword == null || keyword.length() == 0){
                 filteredArtikel.setPredicate(b -> true);
             } else {
-                filteredArtikel.setPredicate(b -> b.getJudul().toLowerCase().contains(keyword));
+                filteredArtikel.setPredicate(b -> b.getJudul().toLowerCase().contains(keyword.toLowerCase()));
             }
             tArtikel.setItems(filteredArtikel);
         });
@@ -291,6 +307,7 @@ public class ControllerArtikelAdmin implements Initializable {
     }
 
     private void insertArtikel(){
+
         String inIdJurnal = tfIdJurnal.getText();
         String inJudul = tfJudul.getText();
         String inPengarang = tfPengarang.getText();
@@ -298,26 +315,70 @@ public class ControllerArtikelAdmin implements Initializable {
         String inHalamanAwal = tfHalamanAwal.getText();
         String inHalamanAkhir = tfHalamanAkhir.getText();
         String inDoi = tfDoi.getText();
-        LocalDate dateDidaftarkan = tfDaftar.getValue();
-        LocalDate dateDireview = tfReview.getValue();
-        LocalDate dateDipublikasikan = tfPublikasi.getValue();
-        String inTanggalDidaftarkan = dateDidaftarkan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String inTanggalDireview = dateDireview.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String inTanggalDipublikasikan = dateDipublikasikan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate inDidaftarkan = tfDaftar.getValue();
+        LocalDate inDireview = tfReview.getValue();
+        LocalDate inDipublikasikan = tfPublikasi.getValue();
 
-        boolean isAfterDaftar = dateDireview.isAfter(dateDidaftarkan);
-        boolean isAfterReview = dateDipublikasikan.isAfter(dateDireview);
+        boolean isAfterDaftar = inDireview.isAfter(inDidaftarkan);
+        boolean isAfterReview = inDipublikasikan.isAfter(inDireview);
         boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
 
-        if(isAfterDaftar && isAfterReview && isHalamanAkhirAfter){
-            String query = "INSERT INTO artikel VALUES (0, '" + inIdJurnal + "','" + inJudul + "','" +
-                    inPengarang + "'," + inNomor + "," + inHalamanAwal + "," + inHalamanAkhir +
-                    ",'" + inDoi + "','" + inTanggalDidaftarkan + "','" + inTanggalDireview
-                    + "','" + inTanggalDipublikasikan + "');";
-            executeQuery(query);
-            showArtikel();
-            clearArtikel();
+        /* field validation */
+        if (inIdJurnal.isEmpty() || inJudul.isEmpty() || inNomor.isEmpty() || inHalamanAwal.isEmpty()
+                || inHalamanAkhir.isEmpty() || inDoi.isEmpty()|| inDidaftarkan == null || inDireview == null
+                || inDipublikasikan == null) {
+            JOptionPane.showMessageDialog(null, "Seluruh kolom wajib terisi");
+            throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
+        } else if (isNotNumberOnly(inNomor) || isNotNumberOnly(inHalamanAwal) || isNotNumberOnly(inHalamanAkhir)) {
+            JOptionPane.showMessageDialog(null, "Kolom Nomor, Halaman Awal,dan Halaman Akhir " +
+                    "hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom Nomor, Halaman Awal, atau Halaman Akhir berisi nilai bukan angka!");
+        } else if (!(isAfterDaftar && isAfterReview)){
+            JOptionPane.showMessageDialog(null, "Pastikan Kolom Tanggal Direview setelah Tanggal Didaftarkan"
+                    + "dan Tanggal Dipublikasikan setelah Tanggal Direview!");
+            throw new IllegalArgumentException("Urutan tanggal tidak benar!");
+        } else if (!(isHalamanAkhirAfter)){
+            JOptionPane.showMessageDialog(null, "Pastikan Kolom Halaman Akhir setelah Halaman Awal");
+            throw new IllegalArgumentException("Urutan halaman tidak benar!");
         }
+
+        String query = "INSERT INTO artikel"
+                + "(idJurnal, judul, pengarang, nomor, halamanAwal, halamanAkhir, doi, tanggalDidaftarkan, tanggalDireview, tanggalDipublikasikan)"
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inIdJurnal);
+            stmt.setString(2, inJudul);
+            stmt.setString(3, inPengarang);
+            stmt.setInt(4, Integer.parseInt(inNomor));
+            stmt.setInt(5, Integer.parseInt(inHalamanAwal));
+            stmt.setInt(6, Integer.parseInt(inHalamanAkhir));
+            stmt.setString(7, inDoi);
+            stmt.setDate(8, java.sql.Date.valueOf(Objects.requireNonNull(inDidaftarkan)));
+            stmt.setDate(9, java.sql.Date.valueOf(Objects.requireNonNull(inDireview)));
+            stmt.setDate(10, java.sql.Date.valueOf(Objects.requireNonNull(inDipublikasikan)));
+
+            /* execute query and getting how many rows affected after query execution */
+            int rowsAffected = stmt.executeUpdate();
+
+            /* showing success response */
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil ditambahkan");
+                showArtikel();
+                clearArtikel();
+            }
+
+        } catch (SQLException sqlException) {
+            int errorCode = sqlException.getErrorCode();
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menambahkan data artikel!");
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
+        }
+
+
+
     }
 
     private void updateArtikel(){
@@ -330,32 +391,114 @@ public class ControllerArtikelAdmin implements Initializable {
         String inHalamanAwal = tfHalamanAwal.getText();
         String inHalamanAkhir = tfHalamanAkhir.getText();
         String inDoi = tfDoi.getText();
-        LocalDate dateDidaftarkan = tfDaftar.getValue();
-        LocalDate dateDireview = tfReview.getValue();
-        LocalDate dateDipublikasikan = tfPublikasi.getValue();
-        String inTanggalDidaftarkan = dateDidaftarkan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String inTanggalDireview = dateDireview.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        String inTanggalDipublikasikan = dateDipublikasikan.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate inDidaftarkan = tfDaftar.getValue();
+        LocalDate inDireview = tfReview.getValue();
+        LocalDate inDipublikasikan = tfPublikasi.getValue();
 
-        boolean isAfterDaftar = dateDireview.isAfter(dateDidaftarkan);
-        boolean isAfterReview = dateDipublikasikan.isAfter(dateDireview);
+        boolean isAfterDaftar = inDireview.isAfter(inDidaftarkan);
+        boolean isAfterReview = inDipublikasikan.isAfter(inDireview);
         boolean isHalamanAkhirAfter = (Integer.parseInt(inHalamanAkhir) >= Integer.parseInt(inHalamanAwal));
-        if(isAfterDaftar && isAfterReview && isHalamanAkhirAfter){
-            String query = "UPDATE artikel SET idJurnal='" + inIdJurnal + "', judul='" + inJudul + "', pengarang='" +
-                    inPengarang + "', nomor=" + inNomor + ", halamanAwal=" + inHalamanAwal + ", halamanAkhir=" + inHalamanAkhir +
-                    ", doi='" + inDoi + "', tanggalDidaftarkan='" + inTanggalDidaftarkan + "', tanggalDireview='" + inTanggalDireview
-                    + "', tanggalDipublikasikan='" + inTanggalDipublikasikan + "' WHERE id="+inIdArtikel+";";
-            executeQuery(query);
-            showArtikel();
-            clearArtikel();
+
+        /* field validation */
+        if (inIdJurnal.isEmpty() || inJudul.isEmpty() || inNomor.isEmpty() || inHalamanAwal.isEmpty()
+                || inHalamanAkhir.isEmpty() || inDoi.isEmpty()|| inDidaftarkan == null || inDireview == null
+                || inDipublikasikan == null) {
+            JOptionPane.showMessageDialog(null, "Seluruh kolom wajib terisi");
+            throw new NullPointerException("Kolom yang wajib diisi masih ada yang kosong!");
+        } else if (isNotNumberOnly(inNomor) || isNotNumberOnly(inHalamanAwal) || isNotNumberOnly(inHalamanAkhir)) {
+            JOptionPane.showMessageDialog(null, "Kolom Nomor, Halaman Awal,dan Halaman Akhir " +
+                    "hanya boleh diisi dengan angka!");
+            throw new NumberFormatException("Kolom Nomor, Halaman Awal, atau Halaman Akhir berisi nilai bukan angka!");
+        } else if (!(isAfterDaftar && isAfterReview)){
+            JOptionPane.showMessageDialog(null, "Pastikan Kolom Tanggal Direview setelah Tanggal Didaftarkan"
+                    + "dan Tanggal Dipublikasikan setelah Tanggal Direview!");
+            throw new IllegalArgumentException("Urutan tanggal tidak benar!");
+        } else if (!(isHalamanAkhirAfter)){
+            JOptionPane.showMessageDialog(null, "Pastikan Kolom Halaman Akhir setelah Halaman Awal");
+            throw new IllegalArgumentException("Urutan halaman tidak benar!");
         }
+
+        String query = "UPDATE buku SET idJurnal = ?, judul = ?, pengarang = ?, nomor = ?, halamanAwal = ?," +
+                "halamanAkhir = ?, doi = ?, tanggalDidaftarkan = ?, tanggalDireview = ?, tanggalDipublikasikan = ? WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inIdJurnal);
+            stmt.setString(2, inJudul);
+            stmt.setString(3, inPengarang);
+            stmt.setInt(4, Integer.parseInt(inNomor));
+            stmt.setInt(5, Integer.parseInt(inHalamanAwal));
+            stmt.setInt(6, Integer.parseInt(inHalamanAkhir));
+            stmt.setString(7, inDoi);
+            stmt.setDate(8, java.sql.Date.valueOf(Objects.requireNonNull(inDidaftarkan)));
+            stmt.setDate(9, java.sql.Date.valueOf(Objects.requireNonNull(inDireview)));
+            stmt.setDate(10, java.sql.Date.valueOf(Objects.requireNonNull(inDipublikasikan)));
+            stmt.setInt(11, Integer.parseInt(inIdArtikel));
+
+            /* execute query and getting how many rows affected after query execution */
+            int rowsAffected = stmt.executeUpdate();
+
+            /* showing success response */
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil diperbarui");
+                showArtikel();
+                clearArtikel();
+            } else {
+                /* if value of kodeBuku not found */
+                JOptionPane.showMessageDialog(null, "ID artikel '" + inIdArtikel + "' tidak ditemukan! Data artikel gagal diperbarui!");
+            }
+
+        } catch (SQLException sqlException) {
+            int errorCode = sqlException.getErrorCode();
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat memperbarui data artikel!");
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
+        }
+
     }
 
     private void deleteArtikel(){
-        String query = "DELETE FROM artikel WHERE id = '" + tfIdArtikel.getText() + "';";
-        executeQuery(query);
-        showArtikel();
-        clearArtikel();
+
+        String inIdArtikel = tfIdArtikel.getText();
+
+        /* field validation */
+        if (inIdArtikel.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Kolom ID Artikel harus terisi! Silahkan klik data artikel yang akan dihapus terlebih dahulu.");
+            throw new NullPointerException("Kolom ID Artikel masih kosong!");
+        }
+
+        String query = "DELETE FROM buku WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = getConnection().prepareStatement(query);
+
+            /* required field */
+            stmt.setString(1, inIdArtikel);
+
+            /* confirm delete action */
+            int confirmDelete = JOptionPane.showConfirmDialog(null, "Anda yakin ingin menghapus data artikel ini?");
+
+            if (confirmDelete == 0) {
+                /* execute query and getting how many rows affected after query execution */
+                int rowsAffected = stmt.executeUpdate();
+
+                /* showing alert response */
+                if (rowsAffected > 0) {
+                    JOptionPane.showMessageDialog(null, rowsAffected + " artikel berhasil dihapus");
+                    showArtikel();
+                    clearArtikel();
+                } else {
+                    /* if value of kodeBuku not found */
+                    JOptionPane.showMessageDialog(null, "Kode buku '" + inIdArtikel + "' tidak ditemukan! Data artikel gagal dihapus!");
+                }
+            }
+
+        } catch (SQLException sqlException) {
+            int errorCode = sqlException.getErrorCode();
+            JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menghapus data artikel!");
+            System.err.println("MYSQL Error " + errorCode + ": " + sqlException.getMessage());
+        }
     }
 
     private void clearArtikel(){

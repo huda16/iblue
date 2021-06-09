@@ -32,6 +32,11 @@
                         </Text>
                     </children>
                 </Pane>
+            <Button fx:id="btnDaftarRak" graphicTextGap="20.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Rak" textFill="WHITE">
+               <font>
+                  <Font name="Open Sans Regular" size="18.0" />
+               </font>
+            </Button>
                 <Button fx:id="btnDaftarBuku" graphicTextGap="20.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                     <graphic>
                     </graphic>

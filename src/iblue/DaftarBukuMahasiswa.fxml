@@ -29,6 +29,11 @@
                       </Text>
                </children>
             </Pane>
+            <Button fx:id="btnDaftarRak" graphicTextGap="20.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #5AB0E3; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Rak" textFill="WHITE">
+               <font>
+                  <Font name="Open Sans Regular" size="18.0" />
+               </font>
+            </Button>
                 <Button graphicTextGap="20.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="300.0" style="-fx-background-color: #273C4F; -fx-alignment: start; -fx-padding: 20 40;" text="Daftar Buku" textFill="WHITE">
                     <graphic>
                     </graphic>
@@ -63,14 +68,15 @@
         <TableView fx:id="tBuku" layoutX="335.0" layoutY="100.0" prefHeight="627.0" prefWidth="983.0">
             <columns>
                 <TableColumn fx:id="colKode" prefWidth="70.66665649414062" text="Kode" />
-                <TableColumn fx:id="colJudul" prefWidth="220.0" text="Judul" />
-                <TableColumn fx:id="colPengarang" prefWidth="147.0" text="Nama Pengarang" />
-                <TableColumn fx:id="colPenerbit" prefWidth="90.0" text="Penerbit" />
-                <TableColumn fx:id="colKota" prefWidth="90.0" text="Kota" />
-                <TableColumn fx:id="colEdisi" prefWidth="50.0" text="Edisi" />
-                <TableColumn fx:id="colPublikasi" prefWidth="90.0" text="Publikasi" />
-                <TableColumn fx:id="colIsbn" prefWidth="150.0" text="ISBN" />
-                <TableColumn fx:id="colStok" prefWidth="75.0" text="Stok" />
+                <TableColumn fx:id="colJudul" prefWidth="183.0" text="Judul" />
+                <TableColumn fx:id="colPengarang" prefWidth="133.0" text="Nama Pengarang" />
+                <TableColumn fx:id="colPenerbit" prefWidth="105.0" text="Penerbit" />
+                <TableColumn fx:id="colKota" prefWidth="78.0" text="Kota" />
+                <TableColumn fx:id="colEdisi" prefWidth="47.0" text="Edisi" />
+                <TableColumn fx:id="colPublikasi" prefWidth="93.0" text="Publikasi" />
+                <TableColumn fx:id="colIsbn" prefWidth="137.0" text="ISBN" />
+                <TableColumn fx:id="colStok" prefWidth="50.0" text="Stok" />
+            <TableColumn fx:id="colKodeRak" prefWidth="85.0" text="Kode Rak" />
             </columns>
         </TableView>
           <TextField fx:id="tfKeyword" layoutX="335.0" layoutY="39.0" prefHeight="35.0" prefWidth="983.0" promptText="Keyword Judul Buku" />
