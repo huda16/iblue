@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +33,9 @@ public class ControllerLoginAdmin implements Initializable {
 
     @FXML
     private Button btnSubmit;
+
+    @FXML
+    private Hyperlink link;
 
     /// --
     Connection con = null;
@@ -56,6 +60,19 @@ public class ControllerLoginAdmin implements Initializable {
                     System.err.println(ex.getMessage());
                 }
 
+            }
+        } else if (event.getSource() == link) {
+            try {
+
+                Node node = (Node) event.getSource();
+                Stage stage = (Stage) node.getScene().getWindow();
+                stage.close();
+                Scene scene = new Scene(FXMLLoader.load(getClass().getResource("loginMahasiswa.fxml")));
+                stage.setScene(scene);
+                stage.show();
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
             }
         }
     }
